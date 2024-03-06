@@ -1,0 +1,7 @@
+.main-content {
+  display: flex;
+  justify-content: space-between;
+  position: relative;
+  gap: 20px;
+  padding: 0 20px;
+}
