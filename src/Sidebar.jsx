@@ -1,20 +1,10 @@
 import React, { useEffect, useState, useRef } from "react"
 import ForecastMap from "./ForecastMap"
 import JsonData from "./AqiHrData.json" // Import your JSON data
+import DailyToggleButton from "./DailyToggleButton"
 
 // Import Styles
-import {
-  Box,
-  Button,
-  ButtonGroup,
-  Checkbox,
-  Progress,
-  CheckboxGroup,
-  useColorModeValue,
-  Heading,
-  Text,
-  Stack
-} from "@chakra-ui/react"
+import { Box, Button, ButtonGroup, Checkbox, Progress, CheckboxGroup, useColorModeValue, Heading, Text, Stack, RadioGroup, Radio } from "@chakra-ui/react"
 import "../src/css/Sidebar.css"
 
 const Sidebar = ({ onDayChange }) => {
@@ -27,14 +17,12 @@ const Sidebar = ({ onDayChange }) => {
 
   useEffect(() => {
     //Get the AQI Value of nearest Station
-    fetch(
-      "https://api.waqi.info/feed/here/?token=a3bf1197881754e07fb1a334116289ffb6104296"
-    )
+    fetch("https://api.waqi.info/feed/here/?token=a3bf1197881754e07fb1a334116289ffb6104296")
       // fetch(
       //   "https://api.waqi.info/feed/@10009/?token=a3bf1197881754e07fb1a334116289ffb6104296"
       // )
-      .then((response) => response.json())
-      .then((data) => {
+      .then(response => response.json())
+      .then(data => {
         if (data.status === "ok") {
           setAqiValue(data.data.aqi)
           const placeName = data.data.city.name.split(" ")
@@ -46,12 +34,12 @@ const Sidebar = ({ onDayChange }) => {
           console.error("Error fetching data:", data.message)
         }
       })
-      .catch((error) => {
+      .catch(error => {
         console.error("Error fetching data:", error)
       })
   }, [])
 
-  const getAqiInfo = (aqiValue) => {
+  const getAqiInfo = aqiValue => {
     if (aqiValue >= 0 && aqiValue <= 50) {
       return { text: "Good", color: "#a8e05f" }
     } else if (aqiValue <= 100) {
@@ -67,71 +55,42 @@ const Sidebar = ({ onDayChange }) => {
     }
   }
 
-  const handleDayClick = (day) => {
+  const handleDayClick = day => {
     onDayChange(day)
   }
 
   return (
     <div className="sidebar-container" ref={containerRef}>
-      <div
-        className="heading-container"
-        style={{ backgroundColor: backgroundColor }}
-      >
+      <div className="heading-container" style={{ backgroundColor: backgroundColor }}>
         <div className="header-aqi-value">
           <Heading as="h3" size="md" mb="4">
             {cityName ? cityName : <Text fontSize="sm">Loading...</Text>}
           </Heading>
           <div className="aqi-value-container">
-            <div className="aqi-value">{aqiValue}</div>
+            <div className="aqi-value">
+              {aqiValue}
+            </div>
             <Text fontSize="xs" color="#495e1b">
               AQI Value
             </Text>
           </div>
         </div>
-        <div className="aqi-text">{aqiText}</div>
+        <div className="aqi-text">
+          {aqiText}
+        </div>
       </div>
       <div className="filter-section">
         <Box mr="2" mb="4">
-          <CheckboxGroup colorScheme="blue">
+          <RadioGroup colorScheme="blue" defaultValue="aqi">
             <Stack spacing={[1, 8]} direction={["column", "row"]}>
-              <Checkbox value="aqi">AQI</Checkbox>
-              <Checkbox value="pm10">PM10</Checkbox>
-              <Checkbox value="nox">NoX</Checkbox>
-              <Checkbox value="pollen">Pollen</Checkbox>
+              <Radio value="aqi">AQI</Radio>
+              <Radio value="pm10">PM10</Radio>
+              <Radio value="nox">NoX</Radio>
+              <Radio value="pollen">Pollen</Radio>
             </Stack>
-          </CheckboxGroup>
+          </RadioGroup>
         </Box>
-        <ButtonGroup
-          className="button-group"
-          size="sm"
-          variant="outline"
-          spacing="2"
-        >
-          <Button
-            _hover={{ backgroundColor: hoverColor }}
-            border="1px"
-            borderColor="gray.400"
-            onClick={() => handleDayClick("d01")}
-          >
-            March 12
-          </Button>
-          <Button
-            _hover={{ backgroundColor: hoverColor }}
-            border="1px"
-            borderColor="gray.400"
-            onClick={() => handleDayClick("d02")}
-          >
-            March 13
-          </Button>
-          <Button
-            _hover={{ backgroundColor: hoverColor }}
-            border="1px"
-            borderColor="gray.400"
-            onClick={() => handleDayClick("d03")}
-          >
-            March 14
-          </Button>
-        </ButtonGroup>
+        <DailyToggleButton onDateChange={handleDayClick} />
       </div>
       <div className="progress-bar">
         <Stack spacing={3}>
