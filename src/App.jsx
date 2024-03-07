@@ -1,10 +1,10 @@
 import { useState } from "react"
-import Navbar from "./Navbar.jsx"
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom"
+import Navbar from "./Navbar"
 import "../src/css/App.css"
-import IsoplethMap from "./IsoplethMap.jsx"
-import Sidebar from "./Sidebar.jsx"
-// import ComparePlace from "./ComparePlace.jsx"
-//import MyComponent from "./TimelineSlider.jsx"
+import Home from "./Home"
+import AboutAirPollution from "./AboutAirPollution"
+import AboutUs from "./AboutUs"
 
 const App = () => {
   const [selectedDay, setSelectedDay] = useState("d01")
@@ -18,20 +18,23 @@ const App = () => {
     setSelectedDay(day)
   }
 
-  // New method to update AQI data
   const updateAqiData = (data) => {
     setAqiData(data)
   }
 
   return (
-    <div className="App">
-      <Navbar updateAqiData={updateAqiData} />
-      <div className="main-content">
-        <IsoplethMap selectedDay={selectedDay} />
-        <Sidebar aqiData={aqiData} onDayChange={handleDayChange} />
-        {/* <MyComponent /> */}
+    <Router>
+      <div className="App">
+        <Navbar />
+        <div>
+          <Routes>
+            <Route path="/home" element={<Home selectedDay={selectedDay} aqiData={aqiData} onDayChange={handleDayChange}/>}/>
+            <Route path="/about-air-pollution" element={<AboutAirPollution />}/>
+            <Route path="/about-us" element={<AboutUs />} />
+          </Routes>
+        </div>
       </div>
-    </div>
+    </Router>
   )
 }
 
