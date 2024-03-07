@@ -1,0 +1,19 @@
+.main-container {
+  display: flex;
+  width: 100%;
+  height: 100vh;
+  padding: 20px 40px;
+}
+.first-col {
+  display: flex;
+  flex-direction: column;
+}
+#comparison-chart {
+  height: 60%;
+  border: 4px solid rgb(216, 216, 216);
+  border-radius: 4px;
+}
+
+.faq-accordion {
+  height: 35%;
+}
