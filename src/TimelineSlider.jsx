@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 
-const YourComponent = () => {
+const TimelineSlider = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -16,6 +16,7 @@ const YourComponent = () => {
   }, []);
 
   return (
+    // Timeline Slider
     <div>
         <RangeSlider defaultValue={[120, 240]} min={0} max={300} step={30}>
             <RangeSliderTrack bg='red.100'>
@@ -28,4 +29,4 @@ const YourComponent = () => {
   );
 };
 
-export default YourComponent;
+export default TimelineSlider;
