@@ -62,7 +62,8 @@ const OurProfile = () => {
             tinl@kth.se
           </Text>
           <Text textAlign={"center"} color={useColorModeValue("gray.700", "gray.400")} px={3}>
-            UI/UX Design/Development
+            UI/UX Design/
+            Development
           </Text>
         </Box>
 
@@ -75,7 +76,8 @@ const OurProfile = () => {
             xinyhu@kth.se
           </Text>
           <Text textAlign={"center"} color={useColorModeValue("gray.700", "gray.400")} px={3}>
-            UI/UX Design/Development
+            UI/UX Design/
+            Development
           </Text>
         </Box>
       </Flex>
