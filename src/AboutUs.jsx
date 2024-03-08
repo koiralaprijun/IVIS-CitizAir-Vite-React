@@ -14,7 +14,7 @@ const OurProfile = () => {
             jyjchian@kth.se
           </Text>
           <Text textAlign={"center"} color={useColorModeValue("gray.700", "gray.400")} px={3}>
-            45 Year experience in design industry. Looking for internship.
+            User Testing/Development
           </Text>
         </Box>
 
@@ -27,7 +27,7 @@ const OurProfile = () => {
             kprijun@gmail.com
           </Text>
           <Text textAlign={"center"} color={useColorModeValue("gray.700", "gray.400")} px={3}>
-            45 Year experience in design industry. Looking for internship.
+            Main Developer
           </Text>
         </Box>
       </Flex>
@@ -42,7 +42,7 @@ const OurProfile = () => {
             tianyini@kth.se
           </Text>
           <Text textAlign={"center"} color={useColorModeValue("gray.700", "gray.400")} px={3}>
-            45 Year experience in design industry. Looking for internship.
+            Data/Development
           </Text>
         </Box>
 
@@ -55,7 +55,7 @@ const OurProfile = () => {
             tinl@kth.se
           </Text>
           <Text textAlign={"center"} color={useColorModeValue("gray.700", "gray.400")} px={3}>
-            45 Year experience in design industry. Looking for internship.
+            UI/UX Design/Development
           </Text>
         </Box>
 
@@ -68,7 +68,7 @@ const OurProfile = () => {
             xinyhu@kth.se
           </Text>
           <Text textAlign={"center"} color={useColorModeValue("gray.700", "gray.400")} px={3}>
-            45 Year experience in design industry. Looking for internship.
+            UI/UX Design/Development
           </Text>
         </Box>
       </Flex>
