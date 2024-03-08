@@ -1,6 +1,7 @@
 import React, { useEffect, useRef } from "react"
 import * as d3 from "d3"
 import AqiHrData from "./AqiHrData.json"
+
 import "../src/css/ForecastMap.css"
 import { Box, Button, ButtonGroup, Checkbox, Progress, CheckboxGroup, useColorModeValue, Heading, Flex, Text, Stack } from "@chakra-ui/react"
 

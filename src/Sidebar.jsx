@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from "react"
+import React, { useState, useRef, useEffect } from "react"
 import ForecastMap from "./ForecastMap"
 import JsonData from "./AqiHrData.json" // Import your JSON data
 import DailyToggleButton from "./DailyToggleButton"
@@ -8,12 +8,11 @@ import BarChart from "./BarChart"
 
 // Import Styles
 import { SimpleGrid, Box, Button, ButtonGroup, Checkbox, Progress, CheckboxGroup, useColorModeValue, Heading, Text, Stack, RadioGroup, Radio } from "@chakra-ui/react"
-import { Accordion, AccordionItem, AccordionButton, AccordionPanel, AccordionIcon } from "@chakra-ui/react"
+import { Input, Accordion, AccordionItem, AccordionButton, AccordionPanel, AccordionIcon } from "@chakra-ui/react"
+import { PhoneIcon, Search2Icon, AddIcon, WarningIcon } from "@chakra-ui/icons"
 import "../src/css/Sidebar.css"
 
 const Sidebar = ({ onDayChange }) => {
-  const containerRef = useRef()
-  const hoverColor = useColorModeValue("gray.100", "gray.200")
   const [aqiValue, setAqiValue] = useState(null)
   const [cityName, setCityName] = useState(null)
   const [aqiText, setAqiText] = useState(null)
@@ -68,8 +67,46 @@ const Sidebar = ({ onDayChange }) => {
     onDayChange({ day: date, metric }) // Notify the parent component
   }
 
+  const handleSearchInputChange = event => {
+    setSearchInput(event.target.value)
+  }
+
+  const handleSearch = () => {
+    const keyword = encodeURIComponent(searchInput)
+    const url = `https://api.waqi.info/search/?keyword=${keyword}&token=a3bf1197881754e07fb1a334116289ffb6104296`
+    fetch(url)
+      .then(response => response.json())
+      .then(data => {
+        setSearchResults(data.data)
+
+        // Update states based on the first search result if there are any results
+        if (data.data && data.data.length > 0) {
+          const firstResult = data.data[0]
+
+          // Assuming the API response structure, adjust as needed
+          const placeName = filterStationName(firstResult.station.name).split(" ").slice(0, 4).join(" ")
+          setCityName(placeName)
+
+          // Update AQI value and text based on the first result
+          setAqiValue(firstResult.aqi)
+          const { text, color } = getAqiInfo(firstResult.aqi)
+          setAqiText(text)
+          setBackgroundColor(color)
+        } else {
+          // Handle case where no results are found
+          console.log("No results found")
+          setCityName(null)
+          setAqiValue(null)
+          setAqiText(null)
+          // Set a default or clear background color
+          setBackgroundColor(null)
+        }
+      })
+      .catch(error => console.error("Error fetching data:", error))
+  }
+
   return (
-    <div className="sidebar-container" ref={containerRef}>
+    <div className="sidebar-container">
       <div className="heading-container" style={{ backgroundColor: backgroundColor }}>
         <div className="header-aqi-value">
           <Heading as="h3" size="md" mb="4">
@@ -90,7 +127,7 @@ const Sidebar = ({ onDayChange }) => {
       </div>
       <div className="filter-section">
         <Box mr="2" mb="4">
-          <RadioGroup onChange={value => handleDateAndMetricChange(selectedDate, value)}>
+          <RadioGroup value={selectedMetric} onChange={value => handleDateAndMetricChange(selectedDate, value)}>
             <Stack spacing={[1, 8]} direction={["column", "row"]}>
               <Radio value="aqi">AQI</Radio>
               <Radio value="pm10">PM10</Radio>
