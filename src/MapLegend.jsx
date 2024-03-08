@@ -6,9 +6,9 @@ const MapLegend = () => {
     { label: "Good", color: "green" },
     { label: "Moderate", color: "yellow" },
     { label: "Unhealthy for sensitive groups", color: "orange" },
-    // { label: "Unhealthy", color: "red" },
-    // { label: "Very unhealthy", color: "purple" },
-    // { label: "Hazardous", color: "darkred" }
+    { label: "Unhealthy", color: "red" },
+    { label: "Very unhealthy", color: "purple" },
+    { label: "Hazardous", color: "darkred" }
   ]
 
   return (

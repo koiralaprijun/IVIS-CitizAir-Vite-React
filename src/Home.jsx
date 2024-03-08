@@ -6,8 +6,8 @@ import "../src/css/Home.css"
 
 const Home = () => {
   // Initialize state for selectedDay and selectedMetric
-  const [selectedDay, setSelectedDay] = useState(null)
-  const [selectedMetric, setSelectedMetric] = useState("aqi") // Default to 'aqi'
+  const [selectedDay, setSelectedDay] = useState("d01")
+  const [selectedMetric, setSelectedMetric] = useState("aqi") 
 
   // Function to update both selectedDay and selectedMetric
   // This assumes the structure { day: string, metric: string }

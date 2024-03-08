@@ -6,11 +6,7 @@ import Home from "./Home"
 import AboutAirPollution from "./AboutAirPollution"
 import AboutUs from "./AboutUs"
 
-
 const App = () => {
-
-
-
   const [selectedDay, setSelectedDay] = useState("d01")
   const [aqiData, setAqiData] = useState({
     aqiValue: null,
@@ -22,9 +18,9 @@ const App = () => {
     setSelectedDay(day)
   }
 
-  const updateAqiData = data => {
-    setAqiData(data)
-  }
+  // const updateAqiData = data => {
+  //   setAqiData(data)
+  // }
 
   return (
     <Router>

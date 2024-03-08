@@ -5,7 +5,7 @@ import { Select, Flex, Box } from "@chakra-ui/react" // Importing Chakra UI comp
 import "../src/css/BarChart.css"
 
 const BarChart = () => {
-  const [selectedPollutant, setSelectedPollutant] = useState("PM10")
+  const [selectedPollutant, setSelectedPollutant] = useState("NitrogenDioxide")
 
   useEffect(
     () => {

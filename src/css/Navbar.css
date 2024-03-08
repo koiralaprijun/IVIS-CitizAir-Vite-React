@@ -19,20 +19,20 @@
 
 .right-navbar {
   display: flex;
-  width: 60%;
+  width: 50%;
   gap: 15px;
   align-items: center;
   justify-content: flex-end;
 }
 
-/* .right-navbar input[type="text"] {
-    padding: 15px; /* Adjust padding to increase the height 
+ .right-navbar input[type="text"] {
+    padding: 15px; 
     border: none;
     border-radius: 4px;
     width: 250px;
     border: 1px solid rgb(44, 83, 167);
   } 
-  
+  /*
   .right-navbar button {
     padding: 15px 20px; /* Adjust padding to increase the height 
     background-color: rgb(44, 83, 167);
