@@ -1,5 +1,12 @@
 import { Heading, Avatar, Box, Center, Text, Stack, Button, Link, Badge, useColorModeValue, Flex, Spacer, Image } from "@chakra-ui/react"
 import "../src/css/AboutUs.css"
+import {
+  Accordion,
+  AccordionItem,
+  AccordionButton,
+  AccordionPanel,
+  AccordionIcon,
+} from '@chakra-ui/react'
 
 const OurProfile = () => {
   return (
@@ -80,74 +87,75 @@ const OurProject = () => {
   return (
     <Box className="left-container">
       <Heading>About Our Project</Heading>
-      <Accordion>
-        <AccordionItem>
-          <h2>
-            <AccordionButton>
-              <Box as="span" flex='1' textAlign='left'>
-                Our Goals
-              </Box>
-              <AccordionIcon />
-            </AccordionButton>
-          </h2>
-          <AccordionPanel pb={4}>
-            We aim to allow people to visualize the air pollution of Stockholm on their screens. 
-            Our website hopes to help ease commuters in avoiding polluted areas in their daily
-            travels around the city.      
-          </AccordionPanel>
-        </AccordionItem>
+      <br/>
+        <Accordion allowToggle defaultIndex={[0]} allowMultiple>
+          <AccordionItem>
+            <h2>
+              <AccordionButton>
+                <Box as="span" flex='1' textAlign='left'>
+                  <b>Our Goals</b>
+                </Box>
+                <AccordionIcon />
+              </AccordionButton>
+            </h2>
+            <AccordionPanel pb={4}>
+              We aim to allow people to visualize the air pollution of Stockholm on their screens. 
+              Our website hopes to help ease commuters in avoiding polluted areas in their daily
+              travels around the city.      
+            </AccordionPanel>
+          </AccordionItem>
 
-        <AccordionItem>
-          <h2>
-            <AccordionButton>
-              <Box as="span" flex='1' textAlign='left'>
-                Future Plans
-              </Box>
-              <AccordionIcon />
-            </AccordionButton>
-          </h2>
-          <AccordionPanel pb={4}>
-            Currently, we only have a webpage version but we aim to eventually develop a mobile
-            application for this data visualization.
-            <br/>
-            <br/>
-            We will also work towards incorporating other parts of Sweden, not just Stockholm,
-            into the application to enable citizens to better plan their travelling routes if
-            they are heading out of the city.
-          </AccordionPanel>
-        </AccordionItem>
+          <AccordionItem>
+            <h2>
+              <AccordionButton>
+                <Box as="span" flex='1' textAlign='left'>
+                  <b>Future Plans</b>
+                </Box>
+                <AccordionIcon />
+              </AccordionButton>
+            </h2>
+            <AccordionPanel pb={4}>
+              Currently, we only have a webpage version but we aim to eventually develop a mobile
+              application for this data visualization.
+              <br/>
+              <br/>
+              We will also work towards incorporating other parts of Sweden, not just Stockholm,
+              into the application to enable citizens to better plan their travelling routes if
+              they are heading out of the city.
+            </AccordionPanel>
+          </AccordionItem>
 
-        <AccordionItem>
-          <h2>
-            <AccordionButton>
-              <Box as="span" flex='1' textAlign='left'>
-                Data Resources
-              </Box>
-              <AccordionIcon />
-            </AccordionButton>
-          </h2>
-          <AccordionPanel pb={4}>
-            Data for this visualization is obtained from SLB-analys and Stockholms Stad.
-          </AccordionPanel>
-        </AccordionItem>
+          <AccordionItem>
+            <h2>
+              <AccordionButton>
+                <Box as="span" flex='1' textAlign='left'>
+                  <b>Data Resources</b>
+                </Box>
+                <AccordionIcon />
+              </AccordionButton>
+            </h2>
+            <AccordionPanel pb={4}>
+              Data for this visualization is obtained from SLB-analys and Stockholms Stad.
+            </AccordionPanel>
+          </AccordionItem>
 
-        <AccordionItem>
-          <h2>
-            <AccordionButton>
-              <Box as="span" flex='1' textAlign='left'>
-                Acknowledgements
-              </Box>
-              <AccordionIcon />
-            </AccordionButton>
-          </h2>
-          <AccordionPanel pb={4}>
-            The success of this project is not without the following people; Mario Romero Vega
-            and Joakim Rasmuson. Under their guidance, it enabled the team to develop CitizAir
-            into what it is today.
-          </AccordionPanel>
-        </AccordionItem>
-      </Accordion>
-    </Box>
+          <AccordionItem>
+            <h2>
+              <AccordionButton>
+                <Box as="span" flex='1' textAlign='left'>
+                  <b>Acknowledgements</b>
+                </Box>
+                <AccordionIcon />
+              </AccordionButton>
+            </h2>
+            <AccordionPanel pb={4}>
+              The success of this project is not without the following people; Mario Romero Vega
+              and Joakim Rasmuson. Under their guidance, it enabled the team to develop CitizAir
+              into what it is today.
+            </AccordionPanel>
+          </AccordionItem>
+        </Accordion>
+      </Box>
   )
 }
 
