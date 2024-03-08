@@ -161,7 +161,7 @@ const OurProject = () => {
 
 const PartnerLogos = () => {
   return (
-    <Flex w="40%" display="flex" alignItems="center" justifyContent="space-around" style={{paddingBottom: "200px" }}>
+    <Flex w="40%" display="flex" alignItems="center" justifyContent="space-around" style={{paddingBottom: "20px" }}>
       <Image boxSize={{ base: "80px", md: "100px" }} objectFit="contain" src="../public/img-slb.png" alt="Slb" />
       <Image boxSize={{ base: "80px", md: "100px" }} objectFit="contain" src="../public/img-stockholm.png" alt="Stockholm Stad" />
       <Image boxSize={{ base: "80px", md: "70px" }} objectFit="contain" src="../public/img-kth.png" alt="Kth" />
