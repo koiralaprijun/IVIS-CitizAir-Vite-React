@@ -6,7 +6,11 @@ import Home from "./Home"
 import AboutAirPollution from "./AboutAirPollution"
 import AboutUs from "./AboutUs"
 
+
 const App = () => {
+
+
+
   const [selectedDay, setSelectedDay] = useState("d01")
   const [aqiData, setAqiData] = useState({
     aqiValue: null,
@@ -14,11 +18,11 @@ const App = () => {
     cityName: null
   })
 
-  const handleDayChange = (day) => {
+  const handleDayChange = day => {
     setSelectedDay(day)
   }
 
-  const updateAqiData = (data) => {
+  const updateAqiData = data => {
     setAqiData(data)
   }
 
@@ -28,8 +32,8 @@ const App = () => {
         <Navbar />
         <div>
           <Routes>
-            <Route path="/home" element={<Home selectedDay={selectedDay} aqiData={aqiData} onDayChange={handleDayChange}/>}/>
-            <Route path="/about-air-pollution" element={<AboutAirPollution />}/>
+            <Route path="/home" element={<Home selectedDay={selectedDay} aqiData={aqiData} onDayChange={handleDayChange} />} />
+            <Route path="/about-air-pollution" element={<AboutAirPollution />} />
             <Route path="/about-us" element={<AboutUs />} />
           </Routes>
         </div>

@@ -1,7 +1,7 @@
-import * as React from 'react'
-import * as ReactDOM from 'react-dom/client'
+import * as React from "react"
+import * as ReactDOM from "react-dom/client"
 import App from "./App"
-import { ChakraProvider } from '@chakra-ui/react'
+import { ChakraProvider } from "@chakra-ui/react"
 
 //Import CSS
 import "../src/css/index.css"

@@ -1,5 +1,3 @@
-// DailyToggleButton.jsx
-
 import React, { useState } from "react"
 import "../src/css/DailyToggleButton.css" // Importing CSS file
 

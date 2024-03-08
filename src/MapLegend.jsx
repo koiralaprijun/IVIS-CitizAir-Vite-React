@@ -1,41 +1,28 @@
-import React, { useEffect } from "react"
-import * as d3 from "d3"
 import "../src/css/MapLegend.css"
+import { Box, Flex, Text } from "@chakra-ui/react"
 
 const MapLegend = () => {
-  useEffect(() => {
-    const svg = d3.select(".legend-svg")
+  const legendData = [
+    { label: "Good", color: "green" },
+    { label: "Moderate", color: "yellow" },
+    { label: "Unhealthy for sensitive groups", color: "orange" },
+    // { label: "Unhealthy", color: "red" },
+    // { label: "Very unhealthy", color: "purple" },
+    // { label: "Hazardous", color: "darkred" }
+  ]
 
-    // Legend categories
-    const legendData = [
-      { label: "Good", color: "green" },
-      { label: "Moderate", color: "yellow" },
-      { label: "Unhealthy for sensitive groups", color: "orange" },
-      { label: "Unhealthy", color: "red" },
-      { label: "Very unhealthy", color: "purple" },
-      { label: "Hazardous", color: "darkred" },
-    ]
-
-    const g = svg
-      .selectAll("g")
-      .data(legendData)
-      .enter()
-      .append("g")
-      .attr("transform", (d, i) => `translate(0, ${i * 20})`)
-
-    g.append("rect")
-      .attr("width", 10)
-      .attr("height", 10)
-      .attr("fill", (d) => d.color)
-
-    g.append("text")
-      .attr("x", 15)
-      .attr("y", 9)
-      .attr("font-size", "10px")
-      .text((d) => d.label)
-  }, [])
-
-  return <svg className="legend-svg" width={200} height={100}></svg>
+  return (
+    <Flex align="center" p="2" bg="rgb(99,99,99, 0.80)" color={"white"} borderRadius="sm" zIndex="10" position="absolute" left="20px" bottom="20px" gap="4">
+      {legendData.map((item, index) =>
+        <Box key={index} display="flex" alignItems="center">
+          <Box w="30px" h="20px" bg={item.color} marginRight="2" />
+          <Text fontSize="xs">
+            {item.label}
+          </Text>
+        </Box>
+      )}
+    </Flex>
+  )
 }
 
 export default MapLegend

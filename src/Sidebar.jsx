@@ -2,9 +2,13 @@ import React, { useEffect, useState, useRef } from "react"
 import ForecastMap from "./ForecastMap"
 import JsonData from "./AqiHrData.json" // Import your JSON data
 import DailyToggleButton from "./DailyToggleButton"
+//import { ThreeDayData } from "./ThreeDayData" // Importing ThreeDayData object
+
+import BarChart from "./BarChart"
 
 // Import Styles
-import { Box, Button, ButtonGroup, Checkbox, Progress, CheckboxGroup, useColorModeValue, Heading, Text, Stack, RadioGroup, Radio } from "@chakra-ui/react"
+import { SimpleGrid, Box, Button, ButtonGroup, Checkbox, Progress, CheckboxGroup, useColorModeValue, Heading, Text, Stack, RadioGroup, Radio } from "@chakra-ui/react"
+import { Accordion, AccordionItem, AccordionButton, AccordionPanel, AccordionIcon } from "@chakra-ui/react"
 import "../src/css/Sidebar.css"
 
 const Sidebar = ({ onDayChange }) => {
@@ -14,6 +18,8 @@ const Sidebar = ({ onDayChange }) => {
   const [cityName, setCityName] = useState(null)
   const [aqiText, setAqiText] = useState(null)
   const [backgroundColor, setBackgroundColor] = useState(null)
+  const [selectedMetric, setSelectedMetric] = useState("aqi")
+  const [selectedDate, setSelectedDate] = useState("d01")
 
   useEffect(() => {
     //Get the AQI Value of nearest Station
@@ -55,8 +61,11 @@ const Sidebar = ({ onDayChange }) => {
     }
   }
 
-  const handleDayClick = day => {
-    onDayChange(day)
+  const handleDateAndMetricChange = (date, metric) => {
+    console.log("Updating day and metric:", { date, metric })
+    setSelectedDate(date) // Update the selectedDate state
+    setSelectedMetric(metric) // Update the selectedMetric state
+    onDayChange({ day: date, metric }) // Notify the parent component
   }
 
   return (
@@ -81,7 +90,7 @@ const Sidebar = ({ onDayChange }) => {
       </div>
       <div className="filter-section">
         <Box mr="2" mb="4">
-          <RadioGroup colorScheme="blue" defaultValue="aqi">
+          <RadioGroup onChange={value => handleDateAndMetricChange(selectedDate, value)}>
             <Stack spacing={[1, 8]} direction={["column", "row"]}>
               <Radio value="aqi">AQI</Radio>
               <Radio value="pm10">PM10</Radio>
@@ -90,20 +99,23 @@ const Sidebar = ({ onDayChange }) => {
             </Stack>
           </RadioGroup>
         </Box>
-        <DailyToggleButton onDateChange={handleDayClick} />
+        <DailyToggleButton onDateChange={date => handleDateAndMetricChange(date, selectedMetric)} />
       </div>
-      <div className="progress-bar">
-        <Stack spacing={3}>
-          <Text>AQI - </Text>
-          <Progress colorScheme="green" size="xs" value={20} />
-          <Text>PM10 - </Text>
-          <Progress colorScheme="green" size="xs" value={55} />
-          <Text>NoX - </Text>
-          <Progress colorScheme="green" size="xs" value={12} />
-          <Text>Birch Pollen -</Text>
-          <Progress colorScheme="green" size="xs" value={89} />
-        </Stack>
-      </div>
+      <Accordion allowToggle>
+        <AccordionItem>
+          <h2>
+            <AccordionButton _expanded={{ bg: "#3182CE", color: "white" }}>
+              <Box as="span" flex="1" textAlign="left">
+                Expand Bar Chart
+              </Box>
+              <AccordionIcon />
+            </AccordionButton>
+          </h2>
+          <AccordionPanel pb={4}>
+            <BarChart />
+          </AccordionPanel>
+        </AccordionItem>
+      </Accordion>
       <ForecastMap JsonData={JsonData} />
     </div>
   )
