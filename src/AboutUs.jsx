@@ -62,7 +62,8 @@ const OurProfile = () => {
             tinl@kth.se
           </Text>
           <Text textAlign={"center"} color={useColorModeValue("gray.700", "gray.400")} px={3}>
-            UI/UX Design/Development
+            UI/UX Design/
+            Development
           </Text>
         </Box>
 
@@ -75,7 +76,8 @@ const OurProfile = () => {
             xinyhu@kth.se
           </Text>
           <Text textAlign={"center"} color={useColorModeValue("gray.700", "gray.400")} px={3}>
-            UI/UX Design/Development
+            UI/UX Design/
+            Development
           </Text>
         </Box>
       </Flex>
@@ -161,10 +163,10 @@ const OurProject = () => {
 
 const PartnerLogos = () => {
   return (
-    <Flex w="40%" display="flex" alignItems="center" justifyContent="space-between">
-      <Image boxSize="100px" objectFit="cover" src="../public/img-slb.png" alt="Slb" />
-      <Image boxSize="100px" objectFit="cover" src="../public/img-stockholm.png" alt="Stockholm Stad" />
-      <Image boxSize="100px" objectFit="cover" src="../public/img-kth.png" alt="Kth" />
+    <Flex w="40%" display="flex" alignItems="center" justifyContent="space-around" style={{paddingBottom: "20px" }}>
+      <Image boxSize={{ base: "80px", md: "100px" }} objectFit="contain" src="../public/img-slb.png" alt="Slb" />
+      <Image boxSize={{ base: "80px", md: "100px" }} objectFit="contain" src="../public/img-stockholm.png" alt="Stockholm Stad" />
+      <Image boxSize={{ base: "80px", md: "70px" }} objectFit="contain" src="../public/img-kth.png" alt="Kth" />
     </Flex>
   )
 }
