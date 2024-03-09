@@ -7,6 +7,12 @@ import "../src/css/BarChart.css"
 const BarChart = () => {
   const [selectedPollutant, setSelectedPollutant] = useState("NitrogenDioxide")
 
+  const dayLabels = {
+    d01: "Day 1",
+    d02: "Day 2",
+    d03: "Day 3"
+  }
+
   useEffect(
     () => {
       updateChart(selectedPollutant)
@@ -73,7 +79,7 @@ const BarChart = () => {
       .attr("r", 5)
       .attr("fill", "#0067b5")
       .on("mouseover", function(event, d) {
-        tooltip.style("opacity", 1).html(`Value: ${d.value}`).style("left", `${event.pageX + 10}px`).style("top", `${event.pageY - 15}px`)
+        tooltip.style("opacity", 1).html(`${dayLabels[d.time]}<br/>Value: ${d.value}`).style("left", `${event.pageX + 10}px`).style("top", `${event.pageY - 15}px`)
 
         d3.select(this).attr("r", 12).attr("fill", "orange")
       })
@@ -88,9 +94,9 @@ const BarChart = () => {
   }
 
   return (
-    <Flex direction="column" align="center">
-      <Box mt={4}>
-        <Select bgColor={"gray.200"} value={selectedPollutant} onChange={handlePollutantChange}>
+    <Flex direction="column" align="flex-start">
+      <Box mt={4} mb={2}>
+        <Select fontSize={"sm"} borderRadius={"none"} border={"none"} borderBottom={"1px"} value={selectedPollutant} onChange={handlePollutantChange}>
           <option value="NitrogenDioxide">Nitrogen Dioxide (NO2)</option>
           <option value="PM10">Particle - PM10</option>
           <option value="Ozone">Ozone(O3)</option>

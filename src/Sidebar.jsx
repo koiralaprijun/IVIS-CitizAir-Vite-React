@@ -1,9 +1,8 @@
 import React, { useState, useRef, useEffect } from "react"
-import ForecastMap from "./ForecastMap"
-import JsonData from "./AqiHrData.json" // Import your JSON data
+import ForeastMap from "./ForecastMap"
 import DailyToggleButton from "./DailyToggleButton"
 //import { ThreeDayData } from "./ThreeDayData" // Importing ThreeDayData object
-
+import { HourlyData } from "./HourlyData"
 import BarChart from "./BarChart"
 
 // Import Styles
@@ -11,6 +10,7 @@ import { SimpleGrid, Box, Button, ButtonGroup, Checkbox, Progress, CheckboxGroup
 import { Input, Accordion, AccordionItem, AccordionButton, AccordionPanel, AccordionIcon } from "@chakra-ui/react"
 import { PhoneIcon, Search2Icon, AddIcon, WarningIcon } from "@chakra-ui/icons"
 import "../src/css/Sidebar.css"
+import ForecastMap from "./ForecastMap"
 
 const Sidebar = ({ onDayChange }) => {
   const [aqiValue, setAqiValue] = useState(null)
@@ -20,12 +20,14 @@ const Sidebar = ({ onDayChange }) => {
   const [selectedMetric, setSelectedMetric] = useState("aqi")
   const [selectedDate, setSelectedDate] = useState("d01")
 
+  const heatmapData = HourlyData.map((item, index) => ({
+    hour: index % 24, // Assuming 72 hours, you'll adjust based on your data structure
+    value: item.value // Assuming each item has a value
+  }))
+
   useEffect(() => {
     //Get the AQI Value of nearest Station
     fetch("https://api.waqi.info/feed/here/?token=a3bf1197881754e07fb1a334116289ffb6104296")
-      // fetch(
-      //   "https://api.waqi.info/feed/@10009/?token=a3bf1197881754e07fb1a334116289ffb6104296"
-      // )
       .then(response => response.json())
       .then(data => {
         if (data.status === "ok") {
@@ -107,6 +109,24 @@ const Sidebar = ({ onDayChange }) => {
 
   return (
     <div className="sidebar-container">
+      <div className="filter-section">
+        <Heading as={"h3"} fontSize={"md"} mb={"4"}>
+          Select Pollutant Particles and Day
+        </Heading>
+        <Box mr="2" mb="4">
+          <RadioGroup value={selectedMetric} onChange={value => handleDateAndMetricChange(selectedDate, value)}>
+            <Stack spacing={[1, 8]} direction={["column", "row"]}>
+              <Radio value="aqi">AQI</Radio>
+              <Radio value="pm10">PM10</Radio>
+              <Radio value="nox">NoX</Radio>
+              <Radio value="pollen">Pollen</Radio>
+            </Stack>
+          </RadioGroup>
+        </Box>
+        <Box>
+          <DailyToggleButton onDateChange={date => handleDateAndMetricChange(date, selectedMetric)} />
+        </Box>
+      </div>
       <div className="heading-container" style={{ backgroundColor: backgroundColor }}>
         <div className="header-aqi-value">
           <Heading as="h3" size="md" mb="4">
@@ -125,27 +145,12 @@ const Sidebar = ({ onDayChange }) => {
           {aqiText}
         </div>
       </div>
-      <div className="filter-section">
-        <Box mr="2" mb="4">
-          <RadioGroup value={selectedMetric} onChange={value => handleDateAndMetricChange(selectedDate, value)}>
-            <Stack spacing={[1, 8]} direction={["column", "row"]}>
-              <Radio value="aqi">AQI</Radio>
-              <Radio value="pm10">PM10</Radio>
-              <Radio value="nox">NoX</Radio>
-              <Radio value="pollen">Pollen</Radio>
-            </Stack>
-          </RadioGroup>
-        </Box>
-        <Box>
-          <DailyToggleButton onDateChange={date => handleDateAndMetricChange(date, selectedMetric)} />
-        </Box>
-      </div>
-      <Accordion bg={"gray.400"} allowToggle>
+      <Accordion bg={"gray.400"} allowMultiple>
         <AccordionItem>
           <h2>
             <AccordionButton _expanded={{ bg: "#3182CE", color: "white" }}>
               <Box as="span" flex="1" textAlign="left">
-                Expand Bar Chart for more Details
+                Daily Forecast
               </Box>
               <AccordionIcon />
             </AccordionButton>
@@ -154,8 +159,20 @@ const Sidebar = ({ onDayChange }) => {
             <BarChart />
           </AccordionPanel>
         </AccordionItem>
+        <AccordionItem>
+          <h2>
+            <AccordionButton _expanded={{ bg: "#3182CE", color: "white" }}>
+              <Box as="span" flex="1" textAlign="left">
+                72 Hour Forecast
+              </Box>
+              <AccordionIcon />
+            </AccordionButton>
+          </h2>
+          <AccordionPanel pb={4}>
+            <ForecastMap />
+          </AccordionPanel>
+        </AccordionItem>
       </Accordion>
-      <ForecastMap JsonData={JsonData} />
     </div>
   )
 }
