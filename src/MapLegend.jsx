@@ -1,27 +1,26 @@
 import "../src/css/MapLegend.css"
-import { Box, Flex, Text } from "@chakra-ui/react"
+import { Tooltip } from '@chakra-ui/react'
 
 const MapLegend = () => {
   const legendData = [
-    { label: "Good", color: "green" },
-    { label: "Moderate", color: "yellow" },
-    { label: "Unhealthy for sensitive groups", color: "orange" },
-    { label: "Unhealthy", color: "red" },
-    { label: "Very unhealthy", color: "purple" },
-    { label: "Hazardous", color: "darkred" }
+    { label: "Good", color: "#55A84F" },
+    { label: "Moderate", color: "#A3C853" },
+    { label: "Unhealthy for sensitive groups", color: "#FFD320" },
+    { label: "Unhealthy", color: "#E93F33" },
+    { label: "Very unhealthy", color: "#AA069F" },
+    { label: "Hazardous", color: "#731425" }
   ]
 
   return (
-    <Flex align="center" p="2" bg="rgb(99,99,99, 0.80)" color={"white"} borderRadius="sm" zIndex="10" position="absolute" left="20px" bottom="20px" gap="4">
+    <div className="legend-container">
       {legendData.map((item, index) =>
-        <Box key={index} display="flex" alignItems="center">
-          <Box w="30px" h="20px" bg={item.color} marginRight="2" />
-          <Text fontSize="xs">
+        <div key={index} className="legend-item" style={{ backgroundColor: item.color }}>
+          <span className="legend-text">
             {item.label}
-          </Text>
-        </Box>
+          </span>
+        </div>
       )}
-    </Flex>
+    </div>
   )
 }
 

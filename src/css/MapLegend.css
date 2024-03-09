@@ -3,3 +3,37 @@
   height: 100%;
   width: 100%;
 }
+.legend-container {
+  display: flex;
+  padding: 4px;
+  color: white;
+  border-radius: 4px;
+  position: absolute;
+  left: 20px;
+  bottom: 20px;
+  z-index: 10;
+}
+
+.legend-item {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 8px;
+  height: 30px;
+  margin: 1px;
+  border-radius: 1px;
+}
+
+.legend-text {
+  font-size: 12px;
+  text-align: center;
+}
+
+.legend-container .legend-item:nth-child(-n + 3) .legend-text {
+  color: black;
+}
+
+.legend-container .legend-item:nth-child(n + 4) .legend-text {
+  color: white;
+}

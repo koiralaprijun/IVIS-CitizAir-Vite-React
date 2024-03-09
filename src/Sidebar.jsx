@@ -136,14 +136,16 @@ const Sidebar = ({ onDayChange }) => {
             </Stack>
           </RadioGroup>
         </Box>
-        <DailyToggleButton onDateChange={date => handleDateAndMetricChange(date, selectedMetric)} />
+        <Box>
+          <DailyToggleButton onDateChange={date => handleDateAndMetricChange(date, selectedMetric)} />
+        </Box>
       </div>
-      <Accordion allowToggle>
+      <Accordion bg={"gray.400"} allowToggle>
         <AccordionItem>
           <h2>
             <AccordionButton _expanded={{ bg: "#3182CE", color: "white" }}>
               <Box as="span" flex="1" textAlign="left">
-                Expand Bar Chart
+                Expand Bar Chart for more Details
               </Box>
               <AccordionIcon />
             </AccordionButton>
