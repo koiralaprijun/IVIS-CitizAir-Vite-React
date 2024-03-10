@@ -56,7 +56,7 @@ const ComparePlace = () => {
 
   const getAqiInfo = aqiValue => {
     if (aqiValue >= 0 && aqiValue <= 50) {
-      return { text: "Good", color: "#a8e05f" }
+      return { text: "Good", color: "#C0E49A" }
     } else if (aqiValue <= 100) {
       return { text: "Moderate", color: "#fdd64b" }
     } else if (aqiValue <= 150) {

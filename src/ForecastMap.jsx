@@ -15,8 +15,8 @@ const ForecastMap = () => {
       if (!AqiHrData[selectedOption]) return
 
       const margin = { top: 10, right: 30, bottom: 30, left: 30 }
-      const width = 500 - margin.left - margin.right
-      const height = 300 - margin.top - margin.bottom
+      const width = 400 - margin.left - margin.right
+      const height = 200 - margin.top - margin.bottom
       const rows = 6
       const cols = 12
       const rowHeight = height / rows
@@ -33,7 +33,30 @@ const ForecastMap = () => {
         .append("g")
         .attr("transform", `translate(${margin.left},${margin.top})`)
 
-      const color = d3.scaleSequential(d3.interpolateInferno).domain([0, d3.max(values)])
+      // Updated color scale
+      const color = d3.scaleLinear().domain([d3.min(values), d3.max(values)]).range(["#C0E49A", "#FD8C3C"])
+
+      // Define X-axis with hours 1 to 12
+      const hours = Array.from({ length: 12 }, (_, i) => i + 0) // Generates hours from 1 to 12
+      const xScale = d3.scalePoint().domain(hours).range([0, width])
+      const xAxis = d3.axisBottom(xScale) // No need to filter for clarity as we are only dealing with 12 points
+
+      // Add X-axis to the svg
+      svg.append("g").attr("transform", `translate(0, ${height})`).call(xAxis)
+
+      // Manually add AM and PM labels
+      const periodLabels = ["AM", "PM", "AM", "PM", "AM", "PM"]
+      svg
+        .selectAll(".periodLabel")
+        .data(periodLabels)
+        .enter()
+        .append("text")
+        .text(d => d)
+        .attr("x", -10) // Adjust X position based on your margin and desired placement
+        .attr("y", (d, i) => i * rowHeight + rowHeight / 2 + 5) // Center text in each row, adjust +5 for better alignment
+        .attr("text-anchor", "end")
+        .attr("alignment-baseline", "middle")
+        .attr("font-size", "10px")
 
       svg
         .selectAll("rect")

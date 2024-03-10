@@ -40,7 +40,8 @@ const BarChart = () => {
     .style("border", "1px solid #ccc")
     .style("border-radius", "5px")
     .style("padding", "5px")
-    .style("pointer-events", "none") // Important to prevent the tooltip from interfering with mouse events.
+    .style("pointer-events", "none")
+  // Important to prevent the tooltip from interfering with mouse events.
 
   const updateChart = selectedPollutant => {
     const data = ThreeDayData.data[selectedPollutant].values.map(d => ({ time: d.time, value: d.value }))
@@ -79,7 +80,7 @@ const BarChart = () => {
       .attr("r", 5)
       .attr("fill", "#0067b5")
       .on("mouseover", function(event, d) {
-        tooltip.style("opacity", 1).html(`${dayLabels[d.time]}<br/>Value: ${d.value}`).style("left", `${event.pageX + 10}px`).style("top", `${event.pageY - 15}px`)
+        tooltip.style("opacity", 1).html(`${dayLabels[d.time]}<br/>Value: ${d.value}`).style("left", `${event.pageX + 10}px`).style("top", `${event.pageY + 15}px`)
 
         d3.select(this).attr("r", 12).attr("fill", "orange")
       })
