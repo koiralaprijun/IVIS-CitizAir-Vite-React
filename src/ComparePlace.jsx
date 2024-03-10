@@ -11,28 +11,33 @@ import {
   useColorModeValue,
   Heading,
   Text,
-  Stack
+  Stack,
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalCloseButton,
+  ModalBody,
+  useDisclosure
 } from "@chakra-ui/react"
 import { Flex, Spacer } from "@chakra-ui/react"
-import { Input, IconButton } from "@chakra-ui/react"
-import { PhoneIcon, Search2Icon, AddIcon, WarningIcon } from "@chakra-ui/icons"
-import * as myModule from "@chakra-ui/react"
+import SearchBar from "./SearchBar"
 
-const ComparePlace = ({ onSearch }) => {
-  const [isSidebarOpen, setIsSidebarOpen] = useState(false)
-  const [cityName, setCityName] = useState(null)
+const ComparePlace = () => {
+  const { isOpen, onOpen, onClose } = useDisclosure()
   const [aqiValue, setAqiValue] = useState(null)
+  const [cityName, setCityName] = useState(null)
   const [aqiText, setAqiText] = useState(null)
   const [backgroundColor, setBackgroundColor] = useState(null)
-  const [searchTerm, setSearchTerm] = useState("")
+  const [selectedMetric, setSelectedMetric] = useState("aqi")
+  const [selectedDate, setSelectedDate] = useState("d01")
+  const [selectedAqi, setSelectedAqi] = useState(null)
 
   useEffect(() => {
-    //Get the AQI Value of nearest Station
-    fetch(
-      "https://api.waqi.info/feed/here/?token=a3bf1197881754e07fb1a334116289ffb6104296"
-    )
-      .then((response) => response.json())
-      .then((data) => {
+    // Get the AQI Value of nearest Station
+    fetch("https://api.waqi.info/feed/here/?token=a3bf1197881754e07fb1a334116289ffb6104296")
+      .then(response => response.json())
+      .then(data => {
         if (data.status === "ok") {
           setAqiValue(data.data.aqi)
           const placeName = data.data.city.name.split(" ")
@@ -44,12 +49,12 @@ const ComparePlace = ({ onSearch }) => {
           console.error("Error fetching data:", data.message)
         }
       })
-      .catch((error) => {
+      .catch(error => {
         console.error("Error fetching data:", error)
       })
   }, [])
 
-  const getAqiInfo = (aqiValue) => {
+  const getAqiInfo = aqiValue => {
     if (aqiValue >= 0 && aqiValue <= 50) {
       return { text: "Good", color: "#a8e05f" }
     } else if (aqiValue <= 100) {
@@ -65,121 +70,56 @@ const ComparePlace = ({ onSearch }) => {
     }
   }
 
-  const toggleSidebar = () => {
-    setIsSidebarOpen(!isSidebarOpen)
-  }
-
-  const handleSearch = () => {
-    onSearch(searchTerm)
-  }
-
-  const handleChange = (event) => {
-    setSearchTerm(event.target.value)
+  const onSelectAqi = ({ aqi, name }) => {
+    setAqiValue(aqi) // Update AQI value
+    setCityName(name) // Update city name
   }
 
   return (
     <div className="container">
       <div className="toggle-bar">
-        <button className="toggle-btn" onClick={toggleSidebar}>
-          <Text fontSize="sm">Compare Place</Text>
-        </button>
+        <Text
+          ml={"0px"}
+          color={"#0183fd"}
+          fontSize="sm"
+          textDecoration="underline" // Apply underline to the text
+          className="toggle-btn"
+          onClick={onOpen}
+        >
+          Compare Place
+        </Text>
       </div>
-      <div className={`sidebar ${isSidebarOpen ? "open" : ""}`}>
-        <div className="close-btn" onClick={toggleSidebar}>
-          <Flex aria-label="Search database">
-            <Spacer />
-            <CloseButton border="1px" borderColor="gray.200" />
-          </Flex>
-        </div>
-        <Text mb={6} fontSize={"3xl"}>Compare Places</Text>
-        <Flex className="search-compare-container" alignItems="center" mb={6}>
-          <Input
-            placeholder="Search..."
-            value={searchTerm}
-            onChange={handleChange}
-            mr={2}
-          />
-          <IconButton aria-label="Search" onClick={handleSearch}>
-      <Search2Icon />
-    </IconButton>
-        </Flex>
-        <Flex>
-          <Box
-            className="compare-box"
-            p="4"
-            border="1px"
-            borderColor="gray.200"
-          >
-            <div
-              className="heading-container"
-              style={{ backgroundColor: backgroundColor }}
-            >
-              <div className="header-aqi-value">
-                <Heading as="h3" size="md" mb="4">
-                  {cityName ? cityName : <Text fontSize="sm">Loading...</Text>}
-                </Heading>
-                <div className="aqi-value-container">
-                  <div className="aqi-value">{aqiValue}</div>
-                  <Text fontSize="xs" color="#495e1b">
-                    AQI Value
-                  </Text>
-                </div>
-              </div>
-              <div className="aqi-text">{aqiText}</div>
-            </div>
-            <div className="progress-bar">
-              <Stack spacing={3}>
-                <Text>AQI - </Text>
-                <Progress colorScheme="green" size="xs" value={20} />
-                <Text>PM10 - </Text>
-                <Progress colorScheme="green" size="xs" value={55} />
-                <Text>NoX - </Text>
-                <Progress colorScheme="green" size="xs" value={12} />
-                <Text>Birch Pollen -</Text>
-                <Progress colorScheme="green" size="xs" value={89} />
-              </Stack>
-            </div>
-          </Box>
-          <Spacer />
-          <Box
-            className="compare-box"
-            p="4"
-            border="1px"
-            borderColor="gray.200"
-          >
-            <div
-              className="heading-container"
-              style={{ backgroundColor: backgroundColor }}
-            >
-              <div className="header-aqi-value">
-                <Heading as="h3" size="md" mb="4">
-                  {cityName ? cityName : <Text fontSize="sm">Loading...</Text>}
-                </Heading>
-                <div className="aqi-value-container">
-                  <div className="aqi-value">{aqiValue}</div>
-                  <Text fontSize="xs" color="#495e1b">
-                    AQI Value
-                  </Text>
-                </div>
-              </div>
-              <div className="aqi-text">{aqiText}</div>
-            </div>
 
-            <div className="progress-bar">
-              <Stack spacing={3}>
-                <Text>AQI - </Text>
-                <Progress colorScheme="green" size="xs" value={20} />
-                <Text>PM10 - </Text>
-                <Progress colorScheme="green" size="xs" value={55} />
-                <Text>NoX - </Text>
-                <Progress colorScheme="green" size="xs" value={12} />
-                <Text>Birch Pollen -</Text>
-                <Progress colorScheme="green" size="xs" value={89} />
-              </Stack>
+      <Modal isOpen={isOpen} onClose={onClose} isCentered size="xl">
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader>Compare Places</ModalHeader>
+          <ModalCloseButton />
+          <ModalBody>
+            <SearchBar onSelectAqi={onSelectAqi} variant="page2" />
+            <div style={{ backgroundColor: backgroundColor }}>
+              <div className="cp-heading-container">
+                <div className="cp-aqi-text">
+                  {aqiText}
+                </div>
+                <div className="cp-header-aqi-value">
+                  <Heading className="cp-search-header" as="h3" size="md">
+                    {cityName ? cityName : "Loading..."}
+                  </Heading>
+                  <div className="cp-aqi-value-container">
+                    <div className="cp-aqi-value">
+                      {aqiValue ? aqiValue : "..."}
+                    </div>
+                    <Text fontSize="xs" color="#495e1b">
+                      AQI Value
+                    </Text>
+                  </div>
+                </div>
+              </div>
             </div>
-          </Box>
-        </Flex>
-      </div>
+          </ModalBody>
+        </ModalContent>
+      </Modal>
     </div>
   )
 }

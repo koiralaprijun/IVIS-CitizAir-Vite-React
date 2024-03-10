@@ -1,8 +1,6 @@
-import React, { useState } from "react"
-import { Link } from "react-router-dom" 
-import ComparePlace from "./ComparePlace"
-import { SearchBar } from "./search-bar/SearchBar"
+import { Link } from "react-router-dom"
 import { Heading } from "@chakra-ui/react"
+
 import "../src/css/Navbar.css"
 
 const Navbar = () => {
@@ -20,9 +18,6 @@ const Navbar = () => {
             About Us
           </Link>
         </div>
-      </div>
-      <div className="right-navbar">
-        <ComparePlace />
       </div>
     </nav>
   )

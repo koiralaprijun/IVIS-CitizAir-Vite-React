@@ -1,9 +1,13 @@
 .container {
   display: flex;
 }
+.compare-place-link {
+  text-decoration: underline;
+  color: #0183fd;
+}
 
 .sidebar {
-  width: 60%;
+  width: 30%;
   background-color: rgba(58, 107, 145, 0.9);
   transition: transform 0.5s ease;
   transform: translateX(-100%);
@@ -32,9 +36,47 @@
   display: flex;
 }
 .compare-box {
-  width: 50%;
+  width: 100%;
   height: 600px;
 }
-.search-compare-container {
-  width: 40%;
+
+.cp-heading-container {
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  color: #556b26;
+  background-color: rgb(227, 227, 227);
+}
+.cp-header-aqi-value {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.cp-header-aqi-value .cp-search-header {
+  width: 75%;
+}
+
+.cp-aqi-value-container {
+  display: flex;
+  flex-direction: column;
+  color: #495e1b;
+  margin-top: 10px;
+}
+.cp-aqi-value {
+  font-size: 24px;
+  font-weight: bolder;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid #495e1b;
+  border-radius: 4px;
+  padding: 5px;
+  color: #495e1b;
+}
+.cp-aqi-text {
+  font-size: 16px;
+  font-weight: normal;
 }

@@ -4,11 +4,11 @@
   align-items: flex-start;
   height: 75vh;
 }
-.left-container {
+.aboutus-left-container {
   width: 40%;
 }
 
-.right-container {
+.aboutus-right-container {
   display: flex;
   flex-direction: column;
   width: 50%;

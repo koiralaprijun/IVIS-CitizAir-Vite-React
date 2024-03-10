@@ -1,10 +1,13 @@
 import React, { useState, useRef, useEffect } from "react"
-import ForeastMap from "./ForecastMap"
+
 import DailyToggleButton from "./DailyToggleButton"
 //import { ThreeDayData } from "./ThreeDayData" // Importing ThreeDayData object
 import { HourlyData } from "./HourlyData"
 import BarChart from "./BarChart"
+import SearchBar from "./SearchBar"
+import "../src/css/SearchBar.css"
 
+import ComparePlace from "./ComparePlace"
 // Import Styles
 import { SimpleGrid, Box, Button, ButtonGroup, Checkbox, Progress, CheckboxGroup, useColorModeValue, Heading, Text, Stack, RadioGroup, Radio } from "@chakra-ui/react"
 import { Input, Accordion, AccordionItem, AccordionButton, AccordionPanel, AccordionIcon } from "@chakra-ui/react"
@@ -19,11 +22,7 @@ const Sidebar = ({ onDayChange }) => {
   const [backgroundColor, setBackgroundColor] = useState(null)
   const [selectedMetric, setSelectedMetric] = useState("aqi")
   const [selectedDate, setSelectedDate] = useState("d01")
-
-  const heatmapData = HourlyData.map((item, index) => ({
-    hour: index % 24, // Assuming 72 hours, you'll adjust based on your data structure
-    value: item.value // Assuming each item has a value
-  }))
+  const [selectedAqi, setSelectedAqi] = useState(null)
 
   useEffect(() => {
     //Get the AQI Value of nearest Station
@@ -73,42 +72,14 @@ const Sidebar = ({ onDayChange }) => {
     setSearchInput(event.target.value)
   }
 
-  const handleSearch = () => {
-    const keyword = encodeURIComponent(searchInput)
-    const url = `https://api.waqi.info/search/?keyword=${keyword}&token=a3bf1197881754e07fb1a334116289ffb6104296`
-    fetch(url)
-      .then(response => response.json())
-      .then(data => {
-        setSearchResults(data.data)
-
-        // Update states based on the first search result if there are any results
-        if (data.data && data.data.length > 0) {
-          const firstResult = data.data[0]
-
-          // Assuming the API response structure, adjust as needed
-          const placeName = filterStationName(firstResult.station.name).split(" ").slice(0, 4).join(" ")
-          setCityName(placeName)
-
-          // Update AQI value and text based on the first result
-          setAqiValue(firstResult.aqi)
-          const { text, color } = getAqiInfo(firstResult.aqi)
-          setAqiText(text)
-          setBackgroundColor(color)
-        } else {
-          // Handle case where no results are found
-          console.log("No results found")
-          setCityName(null)
-          setAqiValue(null)
-          setAqiText(null)
-          // Set a default or clear background color
-          setBackgroundColor(null)
-        }
-      })
-      .catch(error => console.error("Error fetching data:", error))
+  const onSelectAqi = ({ aqi, name }) => {
+    setAqiValue(aqi) // Update AQI value
+    setCityName(name) // Update city name
   }
 
   return (
     <div className="sidebar-container">
+      <SearchBar variant="page1" onSelectAqi={onSelectAqi} />
       <div className="filter-section">
         <Heading as={"h3"} fontSize={"md"} mb={"4"}>
           Select Pollutant Particles and Day
@@ -129,12 +100,15 @@ const Sidebar = ({ onDayChange }) => {
       </div>
       <div className="heading-container" style={{ backgroundColor: backgroundColor }}>
         <div className="header-aqi-value">
-          <Heading as="h3" size="md" mb="4">
-            {cityName ? cityName : <Text fontSize="sm">Loading...</Text>}
+          <Heading className="search-header" as="h3" size="md" mb="4">
+            {cityName ? cityName : "Loading..."}
+            {/* {cityName ? cityName : <Text fontSize="sm">Loading...</Text>} */}
+            <ComparePlace />
           </Heading>
           <div className="aqi-value-container">
             <div className="aqi-value">
-              {aqiValue}
+              {/* {aqiValue} */}
+              {aqiValue ? aqiValue : "..."}
             </div>
             <Text fontSize="xs" color="#495e1b">
               AQI Value
@@ -145,6 +119,9 @@ const Sidebar = ({ onDayChange }) => {
           {aqiText}
         </div>
       </div>
+
+      
+
       <Accordion bg={"gray.400"} allowMultiple>
         <AccordionItem>
           <h2>

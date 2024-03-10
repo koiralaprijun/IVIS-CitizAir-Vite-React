@@ -10,7 +10,7 @@ import {
 
 const OurProfile = () => {
   return (
-    <Box className="right-container" py={6}>
+    <Box className="aboutus-right-container" py={6}>
       <Flex justifyContent={"flex-end"} mb={6}>
         <Box mx="4" maxW={"320px"} w={"full"} bg={useColorModeValue("white", "gray.900")} boxShadow={"2xl"} rounded={"lg"} p={6} textAlign={"center"}>
           <Avatar size={"xl"} src={"../public/img-jordan.jpg"} mb={4} />
@@ -87,10 +87,10 @@ const OurProfile = () => {
 
 const OurProject = () => {
   return (
-    <Box className="left-container">
+    <Box className="aboutus-left-container">
       <Heading>About Our Project</Heading>
       <br/>
-        <Accordion allowToggle defaultIndex={[0]} allowMultiple>
+        <Accordion defaultIndex={[0]} allowMultiple>
           <AccordionItem>
             <h2>
               <AccordionButton>
