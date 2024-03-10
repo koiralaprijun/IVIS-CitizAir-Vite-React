@@ -1,14 +1,15 @@
 import "../src/css/MapLegend.css"
-import { Tooltip } from '@chakra-ui/react'
+import { Tooltip } from "@chakra-ui/react"
 
 const MapLegend = () => {
   const legendData = [
-    { label: "Good", color: "#55A84F" },
-    { label: "Moderate", color: "#A3C853" },
-    { label: "Unhealthy for sensitive groups", color: "#FFD320" },
-    { label: "Unhealthy", color: "#E93F33" },
-    { label: "Very unhealthy", color: "#AA069F" },
-    { label: "Hazardous", color: "#731425" }
+    { label: "No Data", color: "#2792C6" },
+    { label: "Good", color: "#C0E49A" },
+    { label: "Moderate", color: "#FFFFB5" },
+    { label: "Unhealthy for sensitive groups", color: "#FCCF5C" },
+    { label: "Unhealthy", color: "#FD8C3C" },
+    { label: "Very unhealthy", color: "#B3840E" },
+    { label: "Hazardous", color: "#E31C23" }
   ]
 
   return (

@@ -30,10 +30,10 @@
   text-align: center;
 }
 
-.legend-container .legend-item:nth-child(-n + 3) .legend-text {
+.legend-container .legend-item:nth-child(-n + 5) .legend-text {
   color: black;
 }
 
-.legend-container .legend-item:nth-child(n + 4) .legend-text {
+.legend-container .legend-item:nth-child(n + 6) .legend-text {
   color: white;
 }

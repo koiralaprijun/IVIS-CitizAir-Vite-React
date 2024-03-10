@@ -92,12 +92,12 @@ const ComparePlace = () => {
 
       <Modal isOpen={isOpen} onClose={onClose} isCentered size="xl">
         <ModalOverlay />
-        <ModalContent>
+        <ModalContent pb={4}>
           <ModalHeader>Compare Places</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
             <SearchBar onSelectAqi={onSelectAqi} variant="page2" />
-            <div style={{ backgroundColor: backgroundColor }}>
+            <div className="heading-container" style={{ backgroundColor: backgroundColor }}>
               <div className="cp-heading-container">
                 <div className="cp-aqi-text">
                   {aqiText}
