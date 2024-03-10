@@ -191,36 +191,39 @@ const FAQAccordion = () =>
           </AccordionButton>
         </h2>
         <AccordionPanel pb={4}>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
-          exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+          PM stands for Particulate Matter, which is a mixture of solid particles and liquid droplets in the air. Particles are defined by their diameter for air quality 
+          regulatory purposes. Those with a diameter of 10 microns or less (PM10) are inhalable into the lungs and can induce adverse health effects. Fine particulate matter 
+          is defined as particles that are 2.5 microns or less in diameter (PM2.5).
         </AccordionPanel>
       </AccordionItem>
       <AccordionItem>
         <h2>
           <AccordionButton _expanded={{ bg: "#3182CE", color: "white" }}>
             <Box as="span" flex="1" textAlign="left">
-              What is O2?
+              What is O3?
             </Box>
             <AccordionIcon />
           </AccordionButton>
         </h2>
         <AccordionPanel pb={4}>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
-          exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+          O3 (Ozone) is a gas molecule composed of three oxygen atoms. Ozone is good up high, bad nearby. The ozone layer found high in the upper atmosphere shields us 
+          from much of the sun's ultraviolet radiation. However, ozone air pollution at ground level where we can breathe it causes serious health problems. Ozone 
+          aggressively attacks lung tissue by reacting chemically with it. 
         </AccordionPanel>
       </AccordionItem>
       <AccordionItem>
         <h2>
           <AccordionButton _expanded={{ bg: "#3182CE", color: "white" }}>
             <Box as="span" flex="1" textAlign="left">
-              What is NoX?
+              What is NOx?
             </Box>
             <AccordionIcon />
           </AccordionButton>
         </h2>
         <AccordionPanel pb={4}>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
-          exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+          NO and NO2 are two kinds of gases and are referred as NOx (Nitrogen Oxides). NO2 (Nitrogen Dioxide) at high concentrations causes inflammation of the airways. 
+          Breathing in high levels of NO2 can increase the likelihood of respiratory problems: wheezing, coughing, colds, flu and bronchitis. People with asthma are 
+          prone to have more intense attacks. Prolonged exposure to high levels of NO2 can cause irreversible damages to the respiratory system.
         </AccordionPanel>
       </AccordionItem>
       <AccordionItem>
@@ -233,8 +236,10 @@ const FAQAccordion = () =>
           </AccordionButton>
         </h2>
         <AccordionPanel pb={4}>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
-          exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+          Birch trees are trees with beige, silvery or white bark that is often flaky. They are part of the order Fagales and the family Betulaceae of trees. Birch pollen 
+          allergy is one of the most common seasonal allergies. Between 8-16% of people are sensitized to the allergen. The birch pollen count will typically be highest 
+          in the morning. But as you go throughout your day, the pollen may collect on your clothes, skin and hair. You then breathe it in as you go about your day or when 
+          you sleep at night.
         </AccordionPanel>
       </AccordionItem>
       <AccordionItem>
@@ -247,8 +252,9 @@ const FAQAccordion = () =>
           </AccordionButton>
         </h2>
         <AccordionPanel pb={4}>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
-          exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+          AQI stands for Air Quality Index, which serves as a tool to communicate daily air quality by incorporating measurements of five key air pollutants: ground-level ozone, 
+          particulate matter, carbon monoxide, sulfur dioxide, and nitrogen dioxide. AQI runs from 0 to 500 where a lower score indicates cleaner air and a higher score denotes 
+          poorer air condition.
         </AccordionPanel>
       </AccordionItem>
     </Accordion>
