@@ -5,6 +5,7 @@ import AboutAirPollution from "./AboutAirPollution"
 import AboutUs from "./AboutUs"
 import IsoplethMap from "./IsoplethMap"
 import Sidebar from "./Sidebar"
+//import TestCode from "./TestCode"
 
 // Import Styling
 import "../src/css/App.css"
@@ -38,6 +39,7 @@ const App = () => {
     <Router>
       <div className="App">
         <Navbar />
+        {/* <TestCode /> */}
         <Routes>
           <Route
             path="/home"

@@ -6,6 +6,7 @@ import "../src/css/IsoplethMap.css"
 
 const IsoplethMap = ({ selectedDay, selectedMetric }) => {
   const [map, setMap] = useState(null)
+  const [selectedLocation, setSelectedLocation] = useState(null)
 
   useEffect(() => {
     mapboxgl.accessToken = "pk.eyJ1Ijoia3ByaWp1biIsImEiOiJjajd4OHVweTYzb2l1MndvMzlvdm90c2ltIn0.J25C2fbC1KpcqIRglAh4sA"
@@ -63,7 +64,7 @@ const IsoplethMap = ({ selectedDay, selectedMetric }) => {
         })
       }
     },
-    [map, selectedDay, selectedMetric]
+    [map, selectedDay, selectedMetric, selectedLocation]
   )
 
   return (

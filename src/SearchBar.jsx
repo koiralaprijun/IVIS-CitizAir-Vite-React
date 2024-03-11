@@ -1,5 +1,7 @@
 import React, { useState, useEffect, useRef } from "react"
 import "../src/css/SearchBar.css"
+import { SearchIcon } from "@chakra-ui/icons" // Import the search icon
+import { Input, InputGroup, InputRightElement } from "@chakra-ui/react"
 
 const SearchBar = ({ onSelectAqi, variant }) => {
   const [data, setData] = useState([])
@@ -12,17 +14,16 @@ const SearchBar = ({ onSelectAqi, variant }) => {
       .then(response => response.json())
       .then(data => {
         console.log("Fetched Data:", data)
-        setData(data)
+        setData(data.data) // Make sure you're setting the correct part of the data
         setFilterData(data.data)
       })
       .catch(error => console.log(error))
 
-    // Event listener to handle clicks outside of the search results
-    const handleClickOutside = event => {
-      if (searchResultsRef.current && !searchResultsRef.current.contains(event.target)) {
-        setData([])
+      const handleClickOutside = event => {
+        if (searchResultsRef.current && !searchResultsRef.current.contains(event.target)) {
+          setData([])
+        }
       }
-    }
 
     // Adding event listener when component mounts
     document.addEventListener("mousedown", handleClickOutside)
@@ -46,8 +47,8 @@ const SearchBar = ({ onSelectAqi, variant }) => {
 
   const handleClick = (aqi, name) => {
     onSelectAqi({ aqi, name })
-    setData([]) // Hide the search results
-    setInputValue(name) // Update the input field to show the selected location
+    setData([]) // Clear search results
+    setInputValue(name) // Set the input value to the selected location's name
   }
 
   // Function to remove specific words from station name
@@ -64,14 +65,12 @@ const SearchBar = ({ onSelectAqi, variant }) => {
 
   return (
     <div className={`input-wrapper ${variant}`}>
-      <div className="search-bar">
-        <input
-          type="text"
-          placeholder="Search Location..."
-          value={removeWordsFromStationName(inputValue)} // Controlled input with modified value
-          onChange={e => handleFilter(e.target.value)}
-        />
-      </div>
+      <InputGroup>
+        <Input type="text" placeholder="Search Location..." value={removeWordsFromStationName(inputValue)} onChange={e => handleFilter(e.target.value)} />
+        <InputRightElement width="4.5rem">
+            <SearchIcon />
+        </InputRightElement>
+      </InputGroup>
       <div className="search-results" ref={searchResultsRef}>
         {Array.isArray(data) &&
           data.map((d, i) =>

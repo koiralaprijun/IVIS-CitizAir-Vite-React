@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from "react"
+import React, { useEffect, useState, useRef } from "react"
 import * as d3 from "d3"
-import { ThreeDayData } from "./ThreeDayData" // Importing ThreeDayData object
-import { Select, Flex, Box } from "@chakra-ui/react" // Importing Chakra UI components
+import { ThreeDayData } from "./ThreeDayData"
+import { Select, Flex, Box } from "@chakra-ui/react"
 import "../src/css/BarChart.css"
 
 const BarChart = () => {
+  const tooltipRef = useRef()
   const [selectedPollutant, setSelectedPollutant] = useState("NitrogenDioxide")
 
   const dayLabels = {
@@ -27,40 +28,20 @@ const BarChart = () => {
   const x = d3.scaleBand().range([0, width]).padding(0.1)
   const y = d3.scaleLinear().range([height, 0])
 
-  // Append the tooltip div to the body
-  const tooltip = d3
-    .select("body")
-    .selectAll("div.tooltip")
-    .data([0])
-    .join("div")
-    .attr("class", "tooltip")
-    .style("opacity", 0)
-    .style("position", "absolute")
-    .style("background", "white")
-    .style("border", "1px solid #ccc")
-    .style("border-radius", "5px")
-    .style("padding", "5px")
-    .style("pointer-events", "none")
-  // Important to prevent the tooltip from interfering with mouse events.
-
   const updateChart = selectedPollutant => {
-    const data = ThreeDayData.data[selectedPollutant].values.map(d => ({ time: d.time, value: d.value }))
+    const data = ThreeDayData.data[selectedPollutant].values.map(({ time, value }) => ({ time, value }))
 
     x.domain(data.map(d => d.time))
     y.domain([0, d3.max(data, d => +d.value)])
 
-    // Clear SVG content before redrawing
     const svg = d3.select("#chart").html("")
 
-    // Append group element for chart content again after clearing
     const chart = svg.append("g").attr("transform", `translate(${margin.left},${margin.top})`)
 
-    // Redrawing the axes should be done here, after clearing the SVG and before or after plotting the data points
     chart
       .append("g")
       .attr("transform", `translate(0,${height})`)
       .call(d3.axisBottom(x).tickValues(data.map(d => d.time)).tickFormat((d, i) => ["March 12", "March 13", "March 14"][i]))
-
     chart.append("g").call(d3.axisLeft(y))
 
     chart
@@ -69,24 +50,30 @@ const BarChart = () => {
       .attr("fill", "none")
       .attr("stroke", "#0067b5")
       .attr("stroke-width", 2)
-      .attr("d", d3.line().x(d => x(d.time) + x.bandwidth() / 2).y(d => y(d.value)))
+      .attr("d", d3.line().x(({ time }) => x(time) + x.bandwidth() / 2).y(({ value }) => y(value)))
+
+    const tooltip = chart.append("div").attr("class", "tooltip").style("opacity", 0)
 
     chart
       .selectAll("circle")
       .data(data)
       .join("circle")
-      .attr("cx", d => x(d.time) + x.bandwidth() / 2)
-      .attr("cy", d => y(d.value))
-      .attr("r", 5)
+      .attr("cx", ({ time }) => x(time) + x.bandwidth() / 2)
+      .attr("cy", ({ value }) => y(value))
+      .attr("r", 10)
       .attr("fill", "#0067b5")
-      .on("mouseover", function(event, d) {
-        tooltip.style("opacity", 1).html(`${dayLabels[d.time]}<br/>Value: ${d.value}`).style("left", `${event.pageX + 10}px`).style("top", `${event.pageY + 15}px`)
-
-        d3.select(this).attr("r", 12).attr("fill", "orange")
+      .on("mouseover", (event, d) => {
+        const tooltip = tooltipRef.current
+        tooltip.style.visibility = "visible"
+        tooltip.innerHTML = `${dayLabels[d.time]}<br/>Value: ${d.value}`
+        tooltip.style.left = `${event.pageX + 5}px` // Adjust these values as needed
+        tooltip.style.top = `${event.pageY + 5}px` // Increased offset to avoid cursor overlap
+        d3.select(event.currentTarget).attr("r", 12).attr("fill", "orange")
       })
       .on("mouseout", function() {
-        tooltip.style("opacity", 0)
-        d3.select(this).attr("r", 5).attr("fill", "#0067b5")
+        const tooltip = tooltipRef.current
+        tooltip.style.visibility = "hidden"
+        d3.select(this).transition().duration(200).attr("r", 10).attr("fill", "#0067b5")
       })
   }
 
@@ -107,6 +94,9 @@ const BarChart = () => {
         </Select>
       </Box>
       <svg id="chart" width={width + margin.left + margin.right} height={height + margin.top + margin.bottom} />
+      <div ref={tooltipRef} style={{ position: "absolute", visibility: "hidden", background: "white", border: "1px solid", padding: "5px" }}>
+        Tooltip
+      </div>
     </Flex>
   )
 }

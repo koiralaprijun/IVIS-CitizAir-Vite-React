@@ -26,7 +26,7 @@ const Sidebar = ({ onDayChange }) => {
 
   useEffect(() => {
     //Get the AQI Value of nearest Station
-    fetch("https://api.waqi.info/feed/here/?token=a3bf1197881754e07fb1a334116289ffb6104296")
+    fetch("https://api.waqi.info/feed/stockholm/?token=a3bf1197881754e07fb1a334116289ffb6104296")
       .then(response => response.json())
       .then(data => {
         if (data.status === "ok") {
@@ -49,7 +49,7 @@ const Sidebar = ({ onDayChange }) => {
     if (aqiValue >= 0 && aqiValue <= 50) {
       return { text: "Good", color: "#C0E49A" }
     } else if (aqiValue <= 100) {
-      return { text: "Moderate", color: "#fdd64b" }
+      return { text: "Moderate", color: "#FFFFB5" }
     } else if (aqiValue <= 150) {
       return { text: "Unhealthy for Sensitive Groups", color: "#f99049" }
     } else if (aqiValue <= 200) {
@@ -80,24 +80,6 @@ const Sidebar = ({ onDayChange }) => {
   return (
     <div className="sidebar-container">
       <SearchBar variant="page1" onSelectAqi={onSelectAqi} />
-      <div className="filter-section">
-        <Heading as={"h3"} fontSize={"md"} mb={"4"}>
-          Select Pollutant Particles and Day
-        </Heading>
-        <Box mr="2" mb="4">
-          <RadioGroup value={selectedMetric} onChange={value => handleDateAndMetricChange(selectedDate, value)}>
-            <Stack spacing={[1, 8]} direction={["column", "row"]}>
-              <Radio value="aqi">AQI</Radio>
-              <Radio value="pm10">PM10</Radio>
-              <Radio value="nox">NoX</Radio>
-              <Radio value="pollen">Pollen</Radio>
-            </Stack>
-          </RadioGroup>
-        </Box>
-        <Box>
-          <DailyToggleButton onDateChange={date => handleDateAndMetricChange(date, selectedMetric)} />
-        </Box>
-      </div>
       <div className="heading-container" style={{ backgroundColor: backgroundColor }}>
         <div className="header-aqi-value">
           <Heading className="search-header" as="h3" size="md" mb="4">
@@ -119,8 +101,25 @@ const Sidebar = ({ onDayChange }) => {
           {aqiText}
         </div>
       </div>
-
-      <Accordion bg={"gray.400"} allowMultiple>
+      <div className="filter-section">
+        <Heading as={"h3"} fontSize={"md"} mb={"4"}>
+          Select Pollutant Particles and Day
+        </Heading>
+        <Box mr="2" mb="4">
+          <RadioGroup value={selectedMetric} onChange={value => handleDateAndMetricChange(selectedDate, value)}>
+            <Stack spacing={[1, 8]} direction={["column", "row"]}>
+              <Radio value="aqi">AQI</Radio>
+              <Radio value="pm10">PM10</Radio>
+              <Radio value="nox">NoX</Radio>
+              <Radio value="pollen">Pollen</Radio>
+            </Stack>
+          </RadioGroup>
+        </Box>
+        <Box>
+          <DailyToggleButton onDateChange={date => handleDateAndMetricChange(date, selectedMetric)} />
+        </Box>
+      </div>
+      <Accordion bg={"gray.100"} allowMultiple>
         <AccordionItem>
           <h2>
             <AccordionButton _expanded={{ bg: "#3182CE", color: "white" }}>

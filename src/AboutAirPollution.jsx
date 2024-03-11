@@ -1,68 +1,9 @@
 import React, { useRef, useEffect } from "react"
-import * as d3 from "d3"
+import { ComparisonChart } from "./ComparisonChart"
 import { Box, Flex, Heading, Stack, Text, Link, Button, VStack } from "@chakra-ui/react"
 import { Accordion, AccordionItem, AccordionButton, AccordionPanel, AccordionIcon } from "@chakra-ui/react"
 
 import "../src/css/AboutAirPollution.css"
-
-export const ComparisonChart = () => {
-  const svgRef = useRef(null)
-
-  useEffect(() => {
-    const data = {
-      name: "root",
-      children: [{ name: "Human Hair", value: 70 }, { name: "PM10", value: 10 }, { name: "PM2.5", value: 5 }]
-    }
-
-    const width = 600
-    const height = 300
-
-    const svg = d3.select(svgRef.current).attr("width", width).attr("height", height).attr("text-anchor", "middle")
-
-    const root = d3.hierarchy(data).sum(d => d.value).sort((a, b) => b.value - a.value)
-
-    const pack = d3.pack().size([width, height]).padding(5)
-
-    pack(root)
-
-    const node = svg.selectAll("g").data(root.descendants().slice(1)).enter().append("g").attr("transform", d => `translate(${d.x},${d.y})`)
-
-    node.append("circle").attr("r", d => d.r).attr("fill", d => {
-      if (d.data.name === "Human Hair") return "teal"
-      if (d.data.name === "PM10") return "orange"
-      if (d.data.name === "PM2.5") return "cyan"
-      return "none" // Fallback color
-    })
-
-    node
-      .append("text")
-      .text(d => d.data.name)
-      .attr("dy", 4) // Slight adjustment to align text within the circle
-      .style("font-size", d => {
-        if (d.data.name === "Human Hair") return "18px" // Increase font size for Human Hair
-        if (d.data.name === "PM10" || d.data.name === "PM2.5") return "12px" // Decrease font size for PM10 and PM2.5
-        return "12px" // Default font size
-      })
-
-    node
-      .on("mouseover", function() {
-        d3.select(this).select("circle").style("fill-opacity", 0.95)
-      })
-      .on("mouseout", function() {
-        d3.select(this).select("circle").style("fill-opacity", 1)
-      })
-
-    return () => {
-      // Clean up D3 elements if needed
-    }
-  }, []) // Empty dependency array to run only once
-
-  return (
-    <div id="comparison-chart">
-      <svg ref={svgRef} />
-    </div>
-  )
-}
 
 const AirQualityIndex = () => {
   const categories = [
