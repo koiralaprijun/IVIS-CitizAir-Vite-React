@@ -13,7 +13,7 @@ const OurProfile = () => {
     <Box className="aboutus-right-container" py={6}>
       <Flex justifyContent={"flex-end"} mb={6}>
         <Box mx="4" maxW={"320px"} w={"full"} bg={useColorModeValue("white", "gray.900")} boxShadow={"2xl"} rounded={"lg"} p={6} textAlign={"center"}>
-          <Avatar size={"xl"} src={"/public/img-jordan.jpg"} mb={4} />
+          <Avatar size={"xl"} src={"/img-jordan.jpg"} mb={4} />
           <Heading fontSize={"2xl"} fontFamily={"body"}>
             Jordan
           </Heading>
@@ -26,7 +26,7 @@ const OurProfile = () => {
         </Box>
 
         <Box mx="4" maxW={"320px"} w={"full"} bg={useColorModeValue("white", "gray.900")} boxShadow={"2xl"} rounded={"lg"} p={6} textAlign={"center"}>
-          <Avatar size={"xl"} src={"/public/img-prijun.jpg"} mb={4} />
+          <Avatar size={"xl"} src={"/img-prijun.jpg"} mb={4} />
           <Heading fontSize={"2xl"} fontFamily={"body"}>
             Prijun Koirala
           </Heading>
@@ -41,7 +41,7 @@ const OurProfile = () => {
 
       <Flex justifyContent={"flex-end"} mb={6}>
         <Box mx="4" maxW={"320px"} w={"full"} bg={useColorModeValue("white", "gray.900")} boxShadow={"2xl"} rounded={"lg"} p={6} textAlign={"center"}>
-          <Avatar size={"xl"} src={"/public/img-tianyi.jpg"} mb={4} />
+          <Avatar size={"xl"} src={"/img-tianyi.jpg"} mb={4} />
           <Heading fontSize={"2xl"} fontFamily={"body"}>
             Tianyi
           </Heading>
@@ -54,7 +54,7 @@ const OurProfile = () => {
         </Box>
 
         <Box mx="4" maxW={"320px"} w={"full"} bg={useColorModeValue("white", "gray.900")} boxShadow={"2xl"} rounded={"lg"} p={6} textAlign={"center"}>
-          <Avatar size={"xl"} src={"/public/img-tingting.jpg"} mb={4} />
+          <Avatar size={"xl"} src={"/img-tingting.jpg"} mb={4} />
           <Heading fontSize={"2xl"} fontFamily={"body"}>
             Tingting
           </Heading>
@@ -68,7 +68,7 @@ const OurProfile = () => {
         </Box>
 
         <Box mx="4" maxW={"320px"} w={"full"} bg={useColorModeValue("white", "gray.900")} boxShadow={"2xl"} rounded={"lg"} p={6} textAlign={"center"}>
-          <Avatar size={"xl"} src={"/public/img-xinyue.jpg"} mb={4} />
+          <Avatar size={"xl"} src={"/img-xinyue.jpg"} mb={4} />
           <Heading fontSize={"2xl"} fontFamily={"body"}>
             Xinyue
           </Heading>
@@ -164,9 +164,9 @@ const OurProject = () => {
 const PartnerLogos = () => {
   return (
     <Flex w="40%" display="flex" alignItems="center" justifyContent="space-around" style={{paddingBottom: "20px" }}>
-      <Image boxSize={{ base: "80px", md: "100px" }} objectFit="contain" src="/public/img-slb.png" alt="Slb" />
-      <Image boxSize={{ base: "80px", md: "100px" }} objectFit="contain" src="/public/img-stockholm.png" alt="Stockholm Stad" />
-      <Image boxSize={{ base: "80px", md: "70px" }} objectFit="contain" src="/public/img-kth.png" alt="Kth" />
+      <Image boxSize={{ base: "80px", md: "100px" }} objectFit="contain" src="/img-slb.png" alt="Slb" />
+      <Image boxSize={{ base: "80px", md: "100px" }} objectFit="contain" src="/img-stockholm.png" alt="Stockholm Stad" />
+      <Image boxSize={{ base: "80px", md: "70px" }} objectFit="contain" src="/img-kth.png" alt="Kth" />
     </Flex>
   )
 }
