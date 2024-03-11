@@ -54,7 +54,7 @@ const App = () => {
         <Navbar isMobileScreen={isMobileScreen} />
         <Routes>
           <Route
-            path="/home"
+            index // This replaces the path="/" with index for the main component
             element={
               <div className="container">
                 <div className="left-container">

@@ -18,7 +18,7 @@ const Navbar = () => {
         {showSidebar ? <Icon as={GiCancel} /> : <Icon as={GiHamburgerMenu} />}
       </button>
       <div className={`nav-sidebar ${showSidebar ? "show" : ""}`}>
-        <Link to="/home" className="menu-item">
+        <Link to="/" className="menu-item">
           <Heading className="nav-heading" mr={"6"}>
             CitizAir
           </Heading>
@@ -32,7 +32,7 @@ const Navbar = () => {
             About Us
           </Link>
         </div>
-        <div className="map-legend" containerStyle={{ position: "relative", marginBottom:"20px"}}>
+        <div className="map-legend" containerStyle={{ position: "relative", marginBottom: "20px" }}>
           <MapLegend />
         </div>
       </div>
