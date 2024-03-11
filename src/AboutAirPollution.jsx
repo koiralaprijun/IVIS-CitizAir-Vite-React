@@ -10,7 +10,7 @@ const AirQualityIndex = () => {
     {
       name: "Good",
       color: "#a8e05f",
-      description: "Air quality is considered satisfactory, and air pollution poses little or no risk"
+      description: "Air quality is considered satisfactory, and air pollution poses little or no risk."
     },
     {
       name: "Moderate",
@@ -26,24 +26,24 @@ const AirQualityIndex = () => {
     {
       name: "Unhealthy",
       color: "#f65e5f",
-      description: "Everyone may begin to experience health effects; members of sensitive groups may experience more serious health effects"
+      description: "Everyone may begin to experience health effects; members of sensitive groups may experience more serious health effects."
     },
     {
       name: "Very Unhealthy",
       color: "#a070b6",
-      description: "Health warnings of emergency conditions. The entire population is more likely to be affected."
+      description: "Health warnings of emergency conditions. The entire population is likely to be affected."
     },
     {
       name: "Hazardous",
       color: "#a06a7b",
-      description: "Health alert: everyone may experience more serious health effects"
+      description: "Everyone may experience more serious health effects."
     }
   ]
 
   return (
     <Stack spacing={4} align="stretch">
       <Heading as="h2" size="lg" p={4} bg="gray.100" textAlign="center">
-        How good is the weather?
+        How Good is The Weather?
       </Heading>
       {categories.map((category, index) =>
         <Box key={index} bg={category.color} p={4} color="#3b3b3b">
@@ -62,26 +62,26 @@ const AirQualityIndex = () => {
 const UsefulLinks = () => {
   const links = [
     {
-      title: "Air pollution: Impact and prevention",
+      title: "Air Pollution: Impact and Prevention",
       description:
         "Air pollution is becoming a major health problem affecting millions worldwide. In support of this observation, the World Health Organization estimates that every year, 2.4 million people die because of the effects of air pollution on health.",
       href: "https://onlinelibrary.wiley.com/doi/full/10.1111/j.1440-1843.2012.02213.x"
     },
     {
-      title: "Health impact of air pollution to children",
+      title: "Health Impact of Air Pollution to Children",
       description:
         "Health impact of air pollution to children was studied over the last twenty years in heavily polluted parts of the Czech Republic during. The research program (Teplice Program) analyzed these effects in the polluted district Teplice (North Bohemia) and control district Prachatice (Southern Bohemia).",
       href:
         "https://www.sciencedirect.com/science/article/pii/S143846391200137X?casa_token=CJJf8x_puj4AAAAA:1eMZAZQKGVYpqDYxnbbT5aoxozcyhJdM1I8bD09gc6aa9bFqgypR67SrhvqVQ3O-61m2PNoiy8Y"
     },
     {
-      title: "Public-health impact of outdoor and traffic-related air pollution: a European assessment",
+      title: "Public-health Impact of Outdoor and Traffic-related Air Pollution: A European Assessment",
       description:
         "Air pollution contributes to mortality and morbidity. We estimated the impact of outdoor (total) and traffic-related air pollution on public health in Austria, France, and Switzerland. Attributable cases of morbidity and mortality were estimated.",
       href: "https://www.thelancet.com/journals/lancet/article/PIIS0140-6736(00)02653-2/abstract?cc=y%3D%5B%2Fquote%5D"
     },
     {
-      title: "Human health effects of air pollution",
+      title: "Human Health Effects of Air Pollution",
       description:
         "Over the past three or four decades, there have been important advances in the understanding of the actions, exposure-response characteristics, and mechanisms of action of many common air pollutants.",
       href: "https://ehp.niehs.nih.gov/doi/abs/10.1289/ehp.9310045"
