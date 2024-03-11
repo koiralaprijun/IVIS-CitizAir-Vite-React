@@ -52,7 +52,6 @@ const App = () => {
     <Router>
       <div className="App">
         <Navbar isMobileScreen={isMobileScreen} />
-        {/* <TestCode /> */}
         <Routes>
           <Route
             path="/home"

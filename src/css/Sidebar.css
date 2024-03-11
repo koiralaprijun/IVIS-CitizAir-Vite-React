@@ -3,6 +3,7 @@
   flex-direction: column;
   background-color: rgb(255, 255, 255);
   padding: 0px 10px;
+  overflow-x: hidden;
 }
 .heading-container {
   padding: 0;
@@ -86,4 +87,14 @@
 }
 .search-results {
   z-index: 20;
+}
+
+@media (max-width: 768px) {
+  .sidebar-container {
+    padding-top: 20px;
+  }
+
+  .heading-container {
+    margin-top: 10px;
+  }
 }

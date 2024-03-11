@@ -8,7 +8,6 @@ const IsoplethMap = ({ selectedDay, selectedMetric, isMobileScreen }) => {
   const [map, setMap] = useState(null)
   const [selectedLocation, setSelectedLocation] = useState(null)
 
-
   useEffect(() => {
     mapboxgl.accessToken = "pk.eyJ1Ijoia3ByaWp1biIsImEiOiJjajd4OHVweTYzb2l1MndvMzlvdm90c2ltIn0.J25C2fbC1KpcqIRglAh4sA"
     const mapInstance = new mapboxgl.Map({
@@ -19,7 +18,15 @@ const IsoplethMap = ({ selectedDay, selectedMetric, isMobileScreen }) => {
       minZoom: 10.2
     })
 
-    mapInstance.addControl(new mapboxgl.NavigationControl(), "bottom-right")
+    mapInstance.addControl(new mapboxgl.NavigationControl(), "top-right")
+
+    
+    // // Add custom CSS to adjust the margin of the navigation control
+    // const navControlContainer = document.querySelector(".mapboxgl-ctrl-top-right .mapboxgl-ctrl-group");
+    // if (navControlContainer) {
+    //   navControlContainer.style.marginRight = "10px"; // Adjust margin as needed
+    // }
+
 
     setMap(mapInstance)
 
@@ -72,7 +79,7 @@ const IsoplethMap = ({ selectedDay, selectedMetric, isMobileScreen }) => {
     <div id="isopleth-map-container">
       <div id="map-container" />
       <div>
-      {isMobileScreen && <MapLegend />}
+        {isMobileScreen && <MapLegend />}
       </div>
     </div>
   )
