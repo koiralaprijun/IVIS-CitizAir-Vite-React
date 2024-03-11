@@ -9,8 +9,8 @@
   color: white;
   border-radius: 4px;
   position: absolute;
-  left: 20px;
-  bottom: 20px;
+  left: 0px;
+  bottom: 0px;
   z-index: 10;
 }
 
@@ -36,4 +36,13 @@
 
 .legend-container .legend-item:nth-child(n + 6) .legend-text {
   color: white;
+}
+
+
+@media (max-width: 768px) {
+
+  
+  
+
+
 }

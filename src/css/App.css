@@ -1,11 +1,29 @@
-.container {
-  display: flex;
-  gap: 10px;
-}
-.left-container {
-  width: 76%;
+body {
+  overflow-x: hidden; /* Disable horizontal scrolling */
+  overflow-y: hidden; /* Disable vertical scrolling */
 }
 
+.container {
+  display: flex;
+  flex-direction: column; /* Change to column layout for smaller screens */
+}
+
+.left-container,
 .right-container {
-  width: 24%;
+  width: 100%; /* Occupy full width on smaller screens */
+}
+
+/* You can adjust the width of .left-container and .right-container for larger screens if needed */
+@media screen and (min-width: 768px) {
+  .container {
+    flex-direction: row; /* Revert to row layout for larger screens */
+  }
+
+  .left-container {
+    width: 76%; /* Adjust width as needed */
+  }
+
+  .right-container {
+    width: 24%; /* Adjust width as needed */
+  }
 }

@@ -1,7 +1,6 @@
 import "../src/css/MapLegend.css"
-import { Tooltip } from "@chakra-ui/react"
 
-const MapLegend = () => {
+const MapLegend = ({ containerStyle }) => {
   const legendData = [
     { label: "No Data", color: "#2792C6" },
     { label: "Good", color: "#C0E49A" },
@@ -13,7 +12,7 @@ const MapLegend = () => {
   ]
 
   return (
-    <div className="legend-container">
+    <div className="legend-container style={containerStyle}">
       {legendData.map((item, index) =>
         <div key={index} className="legend-item" style={{ backgroundColor: item.color }}>
           <span className="legend-text">

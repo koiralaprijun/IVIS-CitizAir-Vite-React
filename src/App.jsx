@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom"
 import Navbar from "./Navbar"
 import AboutAirPollution from "./AboutAirPollution"
@@ -12,13 +12,26 @@ import "../src/css/App.css"
 
 const App = () => {
   const [selectedAqi, setSelectedAqi] = useState(null)
-
+  const [isMobileScreen, setIsMobileScreen] = useState(false)
   const [selectedDay, setSelectedDay] = useState("d01")
   const [aqiData, setAqiData] = useState({
     aqiValue: null,
     aqiText: null,
     cityName: null
   })
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobileScreen(window.innerWidth >= 768)
+    }
+
+    handleResize() // Initial check
+    window.addEventListener("resize", handleResize)
+
+    return () => {
+      window.removeEventListener("resize", handleResize)
+    }
+  }, [])
 
   const [selectedMetric, setSelectedMetric] = useState("aqi")
 
@@ -38,7 +51,7 @@ const App = () => {
   return (
     <Router>
       <div className="App">
-        <Navbar />
+        <Navbar isMobileScreen={isMobileScreen} />
         {/* <TestCode /> */}
         <Routes>
           <Route
@@ -46,7 +59,7 @@ const App = () => {
             element={
               <div className="container">
                 <div className="left-container">
-                  <IsoplethMap selectedDay={selectedDay} selectedMetric={selectedMetric} onDayChange={handleDayChange} />
+                  <IsoplethMap isMobileScreen={isMobileScreen} selectedDay={selectedDay} selectedMetric={selectedMetric} onDayChange={handleDayChange} />
                 </div>
                 <div className="right-container">
                   <Sidebar onDayChange={handleDayAndMetricChange} aqiData={aqiData} selectedAqi={selectedAqi} />
