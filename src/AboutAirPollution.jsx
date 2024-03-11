@@ -203,6 +203,7 @@ const FAQAccordion = () =>
 
 const AboutAirPollution = () =>
   <Flex direction={{ base: "column", md: "row" }} justify="space-between" className="main-container">
+     <Heading className="about-air-pollution-heading">About Air Pollution</Heading>
     <Flex direction="column" className="first-col" p={4} flex="1">
       <ComparisonChart />
       <FAQAccordion className="faq-accordion" />

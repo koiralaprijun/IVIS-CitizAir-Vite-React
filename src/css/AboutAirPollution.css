@@ -21,11 +21,23 @@
   height: 35%;
 }
 
-
 @media (max-width: 768px) {
+  .main-container {
+    flex-direction: column; /* Change to column layout for smaller screens */
+  }
 
-  
+  .first-col,
+  .second-col,
+  .third-col {
+    width: 100%; /* Make each column occupy full width on smaller screens */
+    margin-bottom: 20px; /* Add space between columns */
+  }
 
+  .faq-accordion {
+    height: auto; /* Adjust height to fit content */
+  }
 
-
+  #comparison-chart {
+    height: auto; /* Adjust height to fit content */
+  }
 }
