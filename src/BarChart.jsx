@@ -66,8 +66,10 @@ const BarChart = () => {
         const tooltip = tooltipRef.current
         tooltip.style.visibility = "visible"
         tooltip.innerHTML = `${dayLabels[d.time]}<br/>Value: ${d.value}`
-        tooltip.style.left = `${event.pageX + 5}px` // Adjust these values as needed
-        tooltip.style.top = `${event.pageY + 5}px` // Increased offset to avoid cursor overlap
+        let tooltipOffsetX = -20 // Horizontal offset from cursor - adjust as needed
+        let tooltipOffsetY = -70 // Vertical offset from cursor - adjust to avoid overlap
+        tooltip.style.left = `${event.clientX + tooltipOffsetX}px`
+        tooltip.style.top = `${event.clientY + tooltipOffsetY}px`
         d3.select(event.currentTarget).attr("r", 12).attr("fill", "orange")
       })
       .on("mouseout", function() {

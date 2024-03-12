@@ -139,7 +139,7 @@ const Sidebar = ({ onDayChange, onSelectLocation }) => {
           <h2>
             <AccordionButton _expanded={{ bg: "#3182CE", color: "white" }}>
               <Box as="span" flex="1" textAlign="left">
-                72 Hour Forecast - - Stockholm City
+                72 Hour Forecast - Stockholm City
               </Box>
               <AccordionIcon />
             </AccordionButton>
