@@ -28,8 +28,12 @@ export const ComparisonChart = () => {
 
   useEffect(
     () => {
-      const width = 600
-      const height = 300
+      // const width = 600
+      // const height = 300
+
+      const isMobile = window.innerWidth < 768
+      const width = isMobile ? window.innerWidth - 40 : 600 // 20px padding on each side for mobile
+      const height = isMobile ? 200 : 300
 
       const svg = d3.select(svgRef.current).attr("width", width).attr("height", height).attr("text-anchor", "middle")
 
@@ -73,9 +77,7 @@ export const ComparisonChart = () => {
 
       // Merge and transition entering + updating nodes
       const nodeMerge = nodeEnter.merge(nodeUpdate)
-
       nodeMerge.transition().duration(transitionDuration).attr("transform", d => `translate(${d.x},${d.y})`)
-
       nodeMerge.select("circle").transition().duration(transitionDuration).attr("r", d => d.r)
 
       nodeMerge
@@ -98,7 +100,7 @@ export const ComparisonChart = () => {
         d3.select(this).select("circle").style("fill-opacity", 1)
       })
     },
-    [currentView]
+    [currentView, window.innerWidth]
   ) // Re-render when currentView changes
 
   const handleNextView = () => {
@@ -127,7 +129,7 @@ export const ComparisonChart = () => {
           {views[currentView].text}
         </Text>
       </Box>
-      <svg ref={svgRef} />
+      <svg className="svg-chart-circle" ref={svgRef} />
     </div>
   )
 }

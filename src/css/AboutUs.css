@@ -1,26 +1,7 @@
-.main-container {
-  display: flex;
-  flex-direction: row;
-  align-items: flex-start;
-  height: 75vh;
-}
-.aboutus-left-container {
-  width: 40%;
-}
 
-.aboutus-right-container {
-  display: flex;
-  flex-direction: column;
-  width: 50%;
-}
 
 @media (max-width: 768px) {
-
-  
- 
-
-
-
-
-
+  .about-us-main-container {
+    margin-top: 20px;
+  }
 }

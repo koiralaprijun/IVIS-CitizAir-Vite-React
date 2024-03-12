@@ -95,24 +95,28 @@ const UsefulLinks = () => {
   ]
 
   return (
-    <VStack spacing={5} align="stretch">
+    <Box>
       <Heading as="h1" size="lg" paddingBottom={4}>
         Impact on Health
       </Heading>
-      {links.map((link, index) =>
-        <Box key={index} p={5} shadow="md" borderWidth="1px" borderRadius="md" backgroundColor="white">
-          <Heading as="h2" size="md" paddingBottom={3}>
-            {link.title}
-          </Heading>
-          <Text paddingBottom={3}>
-            {link.description}
-          </Text>
-          <Link href={link.href} isExternal>
-            <Button colorScheme="blue">Learn More →</Button>
-          </Link>
-        </Box>
-      )}
-    </VStack>
+      <Box maxH="calc(100vh - 200px)" overflowY="auto">
+        <VStack spacing={5} align="stretch">
+          {links.map((link, index) =>
+            <Box key={index} p={5} shadow="md" borderWidth="1px" borderRadius="md" backgroundColor="white">
+              <Heading as="h2" size="md" paddingBottom={3}>
+                {link.title}
+              </Heading>
+              <Text paddingBottom={3}>
+                {link.description}
+              </Text>
+              <Link href={link.href} isExternal>
+                <Button colorScheme="blue">Learn More →</Button>
+              </Link>
+            </Box>
+          )}
+        </VStack>
+      </Box>
+    </Box>
   )
 }
 
@@ -121,7 +125,7 @@ const FAQAccordion = () =>
     <Heading as="h3" size="md" my="4">
       Air Pollutants
     </Heading>
-    <Accordion allowToggle>
+    <Accordion defaultIndex={[0]} allowToggle>
       <AccordionItem>
         <h2>
           <AccordionButton _expanded={{ bg: "#3182CE", color: "white" }}>
@@ -201,17 +205,22 @@ const FAQAccordion = () =>
   </div>
 
 const AboutAirPollution = () =>
-  <Flex direction={{ base: "column", md: "row" }} justify="space-between" className="main-container">
-    <Flex direction="column" className="first-col" p={4} flex="1">
-      <ComparisonChart />
-      <FAQAccordion className="faq-accordion" />
+  <div className="about-us-container">
+    <div className="about-pollution-heading-mobile-view" ml={6} mt={12}>
+      About Air Pollution
+    </div>
+    <Flex direction={{ base: "column", md: "row" }} justify="space-between" className="main-container">
+      <Flex direction="column" className="first-col" p={4} flex="1">
+        <ComparisonChart />
+        <FAQAccordion className="faq-accordion" />
+      </Flex>
+      <Flex className="second-col" p={4} flex="1">
+        <AirQualityIndex />
+      </Flex>
+      <Flex className="third-col" p={4} flex="1">
+        <UsefulLinks />
+      </Flex>
     </Flex>
-    <Flex className="second-col" p={4} flex="1">
-      <AirQualityIndex />
-    </Flex>
-    <Flex className="third-col" p={4} flex="1">
-      <UsefulLinks />
-    </Flex>
-  </Flex>
+  </div>
 
 export default AboutAirPollution
