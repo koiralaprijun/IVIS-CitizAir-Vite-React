@@ -15,7 +15,7 @@ import { PhoneIcon, Search2Icon, AddIcon, WarningIcon } from "@chakra-ui/icons"
 import "../src/css/Sidebar.css"
 import ForecastMap from "./ForecastMap"
 
-const Sidebar = ({ onDayChange }) => {
+const Sidebar = ({ onDayChange, onSelectLocation }) => {
   const [aqiValue, setAqiValue] = useState(null)
   const [cityName, setCityName] = useState(null)
   const [aqiText, setAqiText] = useState(null)
@@ -72,14 +72,16 @@ const Sidebar = ({ onDayChange }) => {
     setSearchInput(event.target.value)
   }
 
-  const onSelectAqi = ({ aqi, name }) => {
-    setAqiValue(aqi) // Update AQI value
-    setCityName(name) // Update city name
+  const onSelectAqi = ({ aqi, name, lat, lon }) => {
+    setAqiValue(aqi)
+    setCityName(name)
+    // Call the passed function from parent component
+    onSelectLocation(lat, lon, 'Location Name', 'AQI Value');
   }
 
   return (
     <div className="sidebar-container">
-      <SearchBar variant="page1" onSelectAqi={onSelectAqi} />
+      <SearchBar variant="page1" onSelectAqi={onSelectAqi} onSelectLocation={onSelectLocation} />
       <div className="heading-container" style={{ backgroundColor: backgroundColor }}>
         <div className="header-aqi-value">
           <Heading className="search-header" as="h3" size="md" mb="4">

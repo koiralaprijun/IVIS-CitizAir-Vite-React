@@ -13,6 +13,7 @@ import "../src/css/App.css"
 const App = () => {
   const [selectedAqi, setSelectedAqi] = useState(null)
   const [isMobileScreen, setIsMobileScreen] = useState(false)
+  const [selectedLocation, setSelectedLocation] = useState(null)
   const [selectedDay, setSelectedDay] = useState("d01")
   const [aqiData, setAqiData] = useState({
     aqiValue: null,
@@ -48,6 +49,10 @@ const App = () => {
     setAqiData(data)
   }
 
+  const handleSelectLocation = (lat, lon, name, aqi) => {
+    setSelectedLocation({ lat, lon, name, aqi })
+  }
+
   return (
     <Router>
       <div className="App">
@@ -58,10 +63,16 @@ const App = () => {
             element={
               <div className="container">
                 <div className="left-container">
-                  <IsoplethMap isMobileScreen={isMobileScreen} selectedDay={selectedDay} selectedMetric={selectedMetric} onDayChange={handleDayChange} />
+                  <IsoplethMap
+                    isMobileScreen={isMobileScreen}
+                    selectedDay={selectedDay}
+                    selectedMetric={selectedMetric}
+                    onDayChange={handleDayChange}
+                    selectedLocation={selectedLocation}
+                  />
                 </div>
                 <div className="right-container">
-                  <Sidebar onDayChange={handleDayAndMetricChange} aqiData={aqiData} selectedAqi={selectedAqi} />
+                  <Sidebar onDayChange={handleDayAndMetricChange} aqiData={aqiData} selectedAqi={selectedAqi} onSelectLocation={handleSelectLocation} />
                 </div>
               </div>
             }

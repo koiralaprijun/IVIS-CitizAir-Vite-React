@@ -4,9 +4,9 @@ import MapLegend from "./MapLegend"
 
 import "../src/css/IsoplethMap.css"
 
-const IsoplethMap = ({ selectedDay, selectedMetric, isMobileScreen }) => {
+const IsoplethMap = ({ selectedDay, selectedMetric, isMobileScreen, selectedLocation }) => {
   const [map, setMap] = useState(null)
-  const [selectedLocation, setSelectedLocation] = useState(null)
+  const [markerCoordinates, setMarkerCoordinates] = useState(null)
 
   useEffect(() => {
     mapboxgl.accessToken = "pk.eyJ1Ijoia3ByaWp1biIsImEiOiJjajd4OHVweTYzb2l1MndvMzlvdm90c2ltIn0.J25C2fbC1KpcqIRglAh4sA"
@@ -20,14 +20,6 @@ const IsoplethMap = ({ selectedDay, selectedMetric, isMobileScreen }) => {
 
     mapInstance.addControl(new mapboxgl.NavigationControl(), "top-right")
 
-    
-    // // Add custom CSS to adjust the margin of the navigation control
-    // const navControlContainer = document.querySelector(".mapboxgl-ctrl-top-right .mapboxgl-ctrl-group");
-    // if (navControlContainer) {
-    //   navControlContainer.style.marginRight = "10px"; // Adjust margin as needed
-    // }
-
-
     setMap(mapInstance)
 
     // Cleanup function
@@ -35,6 +27,44 @@ const IsoplethMap = ({ selectedDay, selectedMetric, isMobileScreen }) => {
       mapInstance.remove()
     }
   }, [])
+
+  useEffect(
+    () => {
+      let marker // Declare marker outside so it's accessible in the cleanup function
+
+      if (map && selectedLocation) {
+        // Create a popup
+        // Create a popup and add a class name via options
+        const popup = new mapboxgl.Popup({ offset: 25, className: "my-custom-popup" }).setHTML(`<h3>${selectedLocation.name}</h3><p>AQI: ${selectedLocation.aqi}</p>`)
+
+        // Create a marker and add it to the map
+        marker = new mapboxgl.Marker()
+          .setLngLat([selectedLocation.lon, selectedLocation.lat])
+          .setPopup(popup) // Sets the popup to appear on click; to show on hover, see below
+          .addTo(map)
+
+        // Optionally, center the map on the marker
+        map.flyTo({
+          center: [selectedLocation.lon, selectedLocation.lat],
+          essential: true,
+          zoom: 14
+        })
+
+        // Add event listeners for mouseenter and mouseleave
+        const markerElement = marker.getElement()
+        markerElement.addEventListener("mouseenter", () => popup.addTo(map))
+        markerElement.addEventListener("mouseleave", () => popup.remove())
+      }
+
+      // Cleanup function to remove the marker and popup when the component unmounts or selectedLocation changes
+      return () => {
+        if (marker) {
+          marker.remove() // This removes the marker from the map
+        }
+      }
+    },
+    [map, selectedLocation]
+  ) // Depend on map and selectedLocation
 
   useEffect(
     () => {
@@ -74,6 +104,11 @@ const IsoplethMap = ({ selectedDay, selectedMetric, isMobileScreen }) => {
     },
     [map, selectedDay, selectedMetric, selectedLocation]
   )
+
+  // This function should be inside your IsoplethMap component
+  const handleSelectLocation = (lat, lng) => {
+    setMarkerCoordinates({ lat, lng })
+  }
 
   return (
     <div id="isopleth-map-container">

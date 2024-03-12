@@ -32,7 +32,7 @@ const Navbar = () => {
             About Us
           </Link>
         </div>
-        <div className="map-legend" containerStyle={{ position: "relative", marginBottom: "20px" }}>
+        <div className="map-legend" containerstyle={{ position: "relative", marginBottom: "20px" }}>
           <MapLegend />
         </div>
       </div>

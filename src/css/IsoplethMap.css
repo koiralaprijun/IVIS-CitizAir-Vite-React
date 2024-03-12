@@ -4,6 +4,35 @@
   overflow-x: hidden;
 }
 
+.my-custom-marker {
+  border-radius: 50%; /* Example: makes the marker circular */
+  border: 2px solid #828282; /* Adds a white border */
+  /* Add more styles as needed */
+}
+
+.my-custom-popup {
+  background-color: #ffffff; /* Change popup background */
+  border-radius: 2px; /* Round corners */
+  /* Add more styles as needed */
+  font-size: 16px;
+  padding: 5px 8px;
+  width: 250px;
+}
+
+.my-custom-popup .mapboxgl-popup-content {
+  padding: 10px; /* Adjust padding inside the popup */
+}
+.my-custom-popup .mapboxgl-popup-close-button {
+  color: white;
+}
+
+.my-custom-popup h3 {
+  color: rgb(0, 82, 205);
+  font-size: 18px;
+  font-weight: bold;
+  padding-bottom: 10px;
+}
+
 /*
 --------------------
 Search Box in Mapbox

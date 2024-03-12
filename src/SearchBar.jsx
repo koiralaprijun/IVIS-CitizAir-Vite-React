@@ -3,7 +3,7 @@ import "../src/css/SearchBar.css"
 import { SearchIcon } from "@chakra-ui/icons" // Import the search icon
 import { Input, InputGroup, InputRightElement } from "@chakra-ui/react"
 
-const SearchBar = ({ onSelectAqi, variant }) => {
+const SearchBar = ({ onSelectAqi, onSelectLocation, variant }) => {
   const [data, setData] = useState([])
   const [filterData, setFilterData] = useState(null)
   const [inputValue, setInputValue] = useState("") // New state for storing input value
@@ -19,11 +19,11 @@ const SearchBar = ({ onSelectAqi, variant }) => {
       })
       .catch(error => console.log(error))
 
-      const handleClickOutside = event => {
-        if (searchResultsRef.current && !searchResultsRef.current.contains(event.target)) {
-          setData([])
-        }
+    const handleClickOutside = event => {
+      if (searchResultsRef.current && !searchResultsRef.current.contains(event.target)) {
+        setData([])
       }
+    }
 
     // Adding event listener when component mounts
     document.addEventListener("mousedown", handleClickOutside)
@@ -45,10 +45,11 @@ const SearchBar = ({ onSelectAqi, variant }) => {
     }
   }
 
-  const handleClick = (aqi, name) => {
-    onSelectAqi({ aqi, name })
-    setData([]) // Clear search results
-    setInputValue(name) // Set the input value to the selected location's name
+  const handleClick = (aqi, name, lat, lon) => {
+    onSelectAqi({ aqi, name }) // Keep your existing functionality
+    onSelectLocation(lat, lon, name, aqi) // Log the latitude and longitude to the console.
+    setData([]) // Clear search results.
+    setInputValue(name) // Set the input value to the selected location's name.
   }
 
   // Function to remove specific words from station name
@@ -68,17 +69,18 @@ const SearchBar = ({ onSelectAqi, variant }) => {
       <InputGroup>
         <Input type="text" placeholder="Search Location..." value={removeWordsFromStationName(inputValue)} onChange={e => handleFilter(e.target.value)} />
         <InputRightElement width="4.5rem">
-            <SearchIcon />
+          <SearchIcon />
         </InputRightElement>
       </InputGroup>
-      <div className="search-results" ref={searchResultsRef}>
-        {Array.isArray(data) &&
-          data.map((d, i) =>
-            <div key={i} onClick={() => handleClick(d.aqi, d.station.name)}>
+      {inputValue &&
+      data.length > 0 && // Add this condition to render search results only if inputValue is not empty and data has elements
+        <div className="search-results" ref={searchResultsRef}>
+          {data.map((d, i) =>
+            <div key={i} onClick={() => handleClick(d.aqi, d.station.name, d.station.geo[0], d.station.geo[1])}>
               {removeWordsFromStationName(d.station.name)}
             </div>
           )}
-      </div>
+        </div>}
     </div>
   )
 }
