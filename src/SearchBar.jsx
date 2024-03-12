@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from "react"
 import "../src/css/SearchBar.css"
 import { SearchIcon } from "@chakra-ui/icons" // Import the search icon
 import { Input, InputGroup, InputRightElement } from "@chakra-ui/react"
+import FullData from "./FullData.json"
 
 const SearchBar = ({ onSelectAqi, onSelectLocation, variant }) => {
   const [data, setData] = useState([])
@@ -9,15 +10,25 @@ const SearchBar = ({ onSelectAqi, onSelectLocation, variant }) => {
   const [inputValue, setInputValue] = useState("") // New state for storing input value
   const searchResultsRef = useRef(null)
 
+  // https://api.waqi.info/feed/A107179/?token=a3bf1197881754e07fb1a334116289ffb6104296
+
   useEffect(() => {
     fetch("https://api.waqi.info/search/?keyword=stockholm&token=a3bf1197881754e07fb1a334116289ffb6104296")
       .then(response => response.json())
-      .then(data => {
-        console.log("Fetched Data:", data)
-        setData(data.data) // Make sure you're setting the correct part of the data
-        setFilterData(data.data)
+      .then(apiData => {
+        const combinedData = [...apiData.data, ...FullData] // Combine API data with local data
+        setData(combinedData)
+        setFilterData(combinedData)
       })
       .catch(error => console.log(error))
+    // fetch("https://api.waqi.info/search/?keyword=stockholm&token=a3bf1197881754e07fb1a334116289ffb6104296")
+    //   .then(response => response.json())
+    //   .then(data => {
+    //     console.log("Fetched Data:", data)
+    //     setData(data.data) // Make sure you're setting the correct part of the data
+    //     setFilterData(data.data)
+    //   })
+    //   .catch(error => console.log(error))
 
     const handleClickOutside = event => {
       if (searchResultsRef.current && !searchResultsRef.current.contains(event.target)) {
@@ -37,7 +48,8 @@ const SearchBar = ({ onSelectAqi, onSelectLocation, variant }) => {
   const handleFilter = value => {
     setInputValue(value) // Update the input value as user types
     if (filterData) {
-      const response = filterData.filter(f => f.station.name.toLowerCase().includes(value.toLowerCase()))
+      // const response = filterData.filter(f => f.station.name.toLowerCase().includes(value.toLowerCase()))
+      const response = filterData.filter(f => f.station?.name.toLowerCase().includes(value.toLowerCase()));
       setData(response)
       if (value === "") {
         setData([])
@@ -76,9 +88,9 @@ const SearchBar = ({ onSelectAqi, onSelectLocation, variant }) => {
       data.length > 0 && // Add this condition to render search results only if inputValue is not empty and data has elements
         <div className="search-results" ref={searchResultsRef}>
           {data.map((d, i) =>
-            <div key={i} onClick={() => handleClick(d.aqi, d.station.name, d.station.geo[0], d.station.geo[1])}>
-              {removeWordsFromStationName(d.station.name)}
-            </div>
+  <div key={i} onClick={() => handleClick(d.aqi, d.station?.name, d.station?.geo[0], d.station?.geo[1])}>
+    {removeWordsFromStationName(d.station?.name)}
+  </div>
           )}
         </div>}
     </div>

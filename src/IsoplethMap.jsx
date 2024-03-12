@@ -33,9 +33,32 @@ const IsoplethMap = ({ selectedDay, selectedMetric, isMobileScreen, selectedLoca
       let marker // Declare marker outside so it's accessible in the cleanup function
 
       if (map && selectedLocation) {
-        // Create a popup
-        // Create a popup and add a class name via options
-        const popup = new mapboxgl.Popup({ offset: 25, className: "my-custom-popup" }).setHTML(`<h3>${selectedLocation.name}</h3><p>AQI: ${selectedLocation.aqi}</p>`)
+        const getAqiInfo = aqiValue => {
+          if (aqiValue >= 0 && aqiValue <= 50) {
+            return { text: "Good", color: "#C0E49A" }
+          } else if (aqiValue <= 100) {
+            return { text: "Moderate", color: "#FFFFB5" }
+          } else if (aqiValue <= 150) {
+            return { text: "Unhealthy for Sensitive Groups", color: "#f99049" }
+          } else if (aqiValue <= 200) {
+            return { text: "Unhealthy", color: "#f65e5f" }
+          } else if (aqiValue <= 300) {
+            return { text: "Very Unhealthy", color: "#a070b6" }
+          } else {
+            return { text: "Hazardous", color: "#a06a7b" }
+          }
+        }
+        // Use getAqiInfo to get text and color based on AQI value
+        const { text: aqiText, color: aqiColor } = getAqiInfo(selectedLocation.aqi)
+
+        // Create a popup with dynamic content based on AQI
+        const popupContent = `
+        <div>
+        <h3>${selectedLocation.name}</h3>
+        <p>AQI: ${selectedLocation.aqi} - <span style="color: ${aqiColor};">${aqiText}</span></p>
+      </div>`
+
+        const popup = new mapboxgl.Popup({ offset: 25, className: "my-custom-popup" }).setHTML(popupContent).addTo(map)
 
         // Create a marker and add it to the map
         marker = new mapboxgl.Marker()
