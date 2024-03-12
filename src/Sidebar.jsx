@@ -119,7 +119,7 @@ const Sidebar = ({ onDayChange }) => {
           <DailyToggleButton onDateChange={date => handleDateAndMetricChange(date, selectedMetric)} />
         </Box>
       </div>
-      <Accordion bg={"gray.100"} allowMultiple>
+      <Accordion defaultIndex={[0]} bg={"gray.100"} allowMultiple>
         <AccordionItem>
           <h2>
             <AccordionButton _expanded={{ bg: "#3182CE", color: "white" }}>
