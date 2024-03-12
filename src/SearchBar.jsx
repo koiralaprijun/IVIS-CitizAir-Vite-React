@@ -4,7 +4,7 @@ import { SearchIcon } from "@chakra-ui/icons" // Import the search icon
 import { Input, InputGroup, InputRightElement } from "@chakra-ui/react"
 import FullData from "./FullData.json"
 
-const SearchBar = ({ onSelectAqi, onSelectLocation, variant }) => {
+const SearchBar = ({ onSelectAqi, onSelectLocation, variant, onResultSelect  }) => {
   const [data, setData] = useState([])
   const [filterData, setFilterData] = useState(null)
   const [inputValue, setInputValue] = useState("") // New state for storing input value
@@ -57,13 +57,29 @@ const SearchBar = ({ onSelectAqi, onSelectLocation, variant }) => {
     }
   }
 
-  const handleClick = (aqi, name, lat, lon) => {
-    onSelectAqi({ aqi, name }) // Keep your existing functionality
-    onSelectLocation(lat, lon, name, aqi) // Log the latitude and longitude to the console.
-    setData([]) // Clear search results.
-    setInputValue(name) // Set the input value to the selected location's name.
-  }
+  // const handleClick = (aqi, name, lat, lon) => {
+  //   onSelectAqi({ aqi, name }) // Keep your existing functionality
+  //   onSelectLocation(lat, lon, name, aqi) // Log the latitude and longitude to the console.
+  //   setData([]) // Clear search results.
+  //   setInputValue(name) // Set the input value to the selected location's name.
+  //   onResultSelect();
+  // }
 
+
+  const handleClick = (aqi, name, lat, lon) => {
+    onSelectAqi({ aqi, name }); // Existing functionality is fine
+  
+    // Check if onSelectLocation is a function before calling it
+    if (typeof onSelectLocation === 'function') {
+      onSelectLocation(lat, lon, name, aqi); // Only call it if it's a function
+    }
+  
+    setData([]); // Clear search results.
+    setInputValue(name); // Set the input value to the selected location's name.
+    if (typeof onResultSelect === 'function') {
+      onResultSelect(); // Also, ensure this is a function before calling
+    }
+  };
   // Function to remove specific words from station name
   const removeWordsFromStationName = stationName => {
     // List of words to remove

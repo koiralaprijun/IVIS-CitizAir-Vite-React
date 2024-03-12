@@ -54,13 +54,23 @@ const ComparePlace = () => {
       })
   }, [])
 
+  useEffect(
+    () => {
+      // Call getAqiInfo whenever aqiValue changes
+      const { text, color } = getAqiInfo(aqiValue)
+      setAqiText(text)
+      setBackgroundColor(color)
+    },
+    [aqiValue]
+  ) // Dependency array, re-run this effect when aqiValue changes
+
   const getAqiInfo = aqiValue => {
     if (aqiValue >= 0 && aqiValue <= 50) {
       return { text: "Good", color: "#C0E49A" }
     } else if (aqiValue <= 100) {
-      return { text: "Moderate", color: "#fdd64b" }
+      return { text: "Moderate", color: "#FFFFB5" }
     } else if (aqiValue <= 150) {
-      return { text: "Unhealthy for Sensitive Groups", color: "#f99049" }
+      return { text: "Unhealthy for Sensitive Groups", color: "#FCCF5C" }
     } else if (aqiValue <= 200) {
       return { text: "Unhealthy", color: "#f65e5f" }
     } else if (aqiValue <= 300) {
@@ -73,6 +83,20 @@ const ComparePlace = () => {
   const onSelectAqi = ({ aqi, name }) => {
     setAqiValue(aqi) // Update AQI value
     setCityName(name) // Update city name
+  }
+
+  const handleClick = (aqi, name, lat, lon) => {
+    // Assuming onSelectAqi and onSelectLocation are props passed to SearchBar
+    onSelectAqi({ aqi, name })
+    onSelectLocation(lat, lon, name, aqi)
+    setData([]) // This clears the search results within SearchBar itself
+  }
+
+  // Function to handle search result selection
+  const handleResultSelect = () => {
+    // Implement any additional logic needed upon selecting a search result
+    // For now, it seems you directly clear search results in SearchBar, which might be sufficient
+    console.log("Search result selected. Implement any additional logic as needed.")
   }
 
   return (
@@ -96,7 +120,7 @@ const ComparePlace = () => {
           <ModalHeader>Compare Places</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
-            <SearchBar onSelectAqi={onSelectAqi} variant="page2" />
+            <SearchBar onSelectAqi={onSelectAqi} onResultSelect={handleResultSelect} variant="page2" />
             <div className="heading-container" style={{ backgroundColor: backgroundColor }}>
               <div className="cp-heading-container">
                 <div className="cp-aqi-text">
