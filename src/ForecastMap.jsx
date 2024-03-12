@@ -34,7 +34,7 @@ const ForecastMap = () => {
         .attr("transform", `translate(${margin.left},${margin.top})`)
 
       // Updated color scale
-      const color = d3.scaleLinear().domain([d3.min(values), d3.max(values)]).range(["#C0E49A", "#FD8C3C"])
+      const color = d3.scaleLinear().domain([d3.min(values), d3.max(values)]).range(["#C0E49A", "#FFFFB5"])
 
       // Define X-axis with hours 1 to 12
       const hours = Array.from({ length: 12 }, (_, i) => i + 0) // Generates hours from 1 to 12

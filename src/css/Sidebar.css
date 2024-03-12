@@ -1,9 +1,10 @@
 .sidebar-container {
   display: flex;
+  height: 90vh;
   flex-direction: column;
   background-color: rgb(255, 255, 255);
   padding: 0px 10px;
-  overflow-x: hidden;
+  overflow-y: auto;
 }
 .heading-container {
   padding: 0;

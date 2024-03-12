@@ -5,7 +5,9 @@ body {
 .container {
   display: flex;
   flex-direction: row; /* Default layout for larger screens */
-  position: relative; /* Set position relative for the parent container */
+  position: relative;
+  overflow-x: hidden;
+  overflow-y: hidden; /* Set position relative for the parent container */
 }
 
 .left-container {
