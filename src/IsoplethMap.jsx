@@ -1,12 +1,15 @@
 import React, { useEffect, useState } from "react"
 import mapboxgl from "mapbox-gl"
 import MapLegend from "./MapLegend"
+import TimelineSlider from "./TimelineSlider"
 
 import "../src/css/IsoplethMap.css"
 
-const IsoplethMap = ({ selectedDay, selectedMetric, isMobileScreen, selectedLocation }) => {
+const IsoplethMap = ({ selectedDay, selectedMetric, selectedLocation }) => {
   const [map, setMap] = useState(null)
   const [markerCoordinates, setMarkerCoordinates] = useState(null)
+  const [currentHour, setCurrentHour] = useState(0)
+  const [selectedOption, setSelectedOption] = useState("no2")
 
   useEffect(() => {
     mapboxgl.accessToken = "pk.eyJ1Ijoia3ByaWp1biIsImEiOiJjajd4OHVweTYzb2l1MndvMzlvdm90c2ltIn0.J25C2fbC1KpcqIRglAh4sA"
@@ -128,16 +131,88 @@ const IsoplethMap = ({ selectedDay, selectedMetric, isMobileScreen, selectedLoca
     [map, selectedDay, selectedMetric, selectedLocation]
   )
 
+  useEffect(
+    () => {
+      if (!map || !selectedLocation) return
+
+      const marker = new mapboxgl.Marker().setLngLat([selectedLocation.lon, selectedLocation.lat]).addTo(map)
+
+      map.flyTo({
+        center: [selectedLocation.lon, selectedLocation.lat],
+        essential: true,
+        zoom: 14
+      })
+
+      return () => marker.remove()
+    },
+    [map, selectedLocation]
+  )
+
+  useEffect(
+    () => {
+      if (!map) return
+
+      const hourFormatted = currentHour.toString().padStart(2, "0")
+      const imagePath = `/raster-image/${selectedMetric}_daily/${selectedMetric}_h${hourFormatted}_raster.png`
+
+      // Remove existing overlay layer and source if they exist
+      if (map.getLayer("overlay")) {
+        map.removeLayer("overlay")
+      }
+      if (map.getSource("overlay")) {
+        map.removeSource("overlay")
+      }
+
+      // Wait for the existing source and layer to be removed before loading a new image
+      map.loadImage(`/raster-image/${selectedMetric}_daily/${selectedMetric}_h${hourFormatted}_raster.png`, (error, image) => {
+        if (error) {
+          console.error("Failed to load image:", error)
+          return
+        }
+
+        // Add the image to the map as a new source
+        map.addImage("overlay-image", image, { pixelRatio: 2 })
+
+        // Define a new source with the updated image
+        map.addSource("overlay", {
+          type: "image",
+          url: `/raster-image/${selectedMetric}_daily/${selectedMetric}_h${hourFormatted}_raster.png`,
+          coordinates: [[17.732179, 59.522258], [18.348042, 59.522258], [18.348042, 59.208266], [17.732179, 59.208266]] // Adjust these coordinates based on your specific needs
+        })
+
+        // Add a new overlay layer using the new source
+        map.addLayer({
+          id: "overlay",
+          type: "raster",
+          source: "overlay",
+          paint: { "raster-opacity": 0.85 }
+        })
+      })
+    },
+    [map, currentHour]
+  )
+
   // This function should be inside your IsoplethMap component
   const handleSelectLocation = (lat, lng) => {
     setMarkerCoordinates({ lat, lng })
   }
 
+  const handleSliderChange = (event, newValue) => {
+    setCurrentHour(newValue)
+  }
+
+  const handleSelectChange = event => {
+    setSelectedOption(event.target.value)
+  }
+
   return (
     <div id="isopleth-map-container">
       <div id="map-container" />
+      <div className="timeline-slider-container">
+        <TimelineSlider currentHour={currentHour} onChange={handleSliderChange} />
+      </div>
       <div>
-        {isMobileScreen && <MapLegend />}
+        <MapLegend />
       </div>
     </div>
   )

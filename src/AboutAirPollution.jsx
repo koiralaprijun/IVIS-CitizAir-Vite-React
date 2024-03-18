@@ -1,11 +1,11 @@
 import React, { useRef, useEffect } from "react"
-import { ComparisonChart } from "./ComparisonChart"
+import  ComparisonChart  from "./ComparisonChart"
 import { Box, Flex, Heading, Stack, Text, Link, Button, VStack } from "@chakra-ui/react"
 import { Accordion, AccordionItem, AccordionButton, AccordionPanel, AccordionIcon } from "@chakra-ui/react"
 
 import "../src/css/AboutAirPollution.css"
 
-const AirQualityIndex = () => {
+export const AirQualityIndex = () => {
   const categories = [
     {
       name: "Good",
@@ -59,7 +59,7 @@ const AirQualityIndex = () => {
   )
 }
 
-const UsefulLinks = () => {
+export const UsefulLinks = () => {
   const links = [
     {
       title: "Air Pollution: Impact and Prevention",
@@ -120,11 +120,11 @@ const UsefulLinks = () => {
   )
 }
 
-const FAQAccordion = () =>
+export const FAQAccordion = () =>
   <div>
-    <Heading as="h3" size="md" my="4">
+    {/* <Heading as="h3" size="md" my="4">
       Air Pollutants
-    </Heading>
+    </Heading> */}
     <Accordion defaultIndex={[0]} allowToggle>
       <AccordionItem>
         <h2>
@@ -204,23 +204,21 @@ const FAQAccordion = () =>
     </Accordion>
   </div>
 
-const AboutAirPollution = () =>
-  <div className="about-us-container">
-    <div className="about-pollution-heading-mobile-view" ml={6} mt={12}>
-      About Air Pollution
-    </div>
-    <Flex direction={{ base: "column", md: "row" }} justify="space-between" className="main-container">
-      <Flex direction="column" className="first-col" p={4} flex="1">
-        <ComparisonChart />
-        <FAQAccordion className="faq-accordion" />
-      </Flex>
-      <Flex className="second-col" p={4} flex="1">
-        <AirQualityIndex />
-      </Flex>
-      <Flex className="third-col" p={4} flex="1">
-        <UsefulLinks />
-      </Flex>
-    </Flex>
-  </div>
-
-export default AboutAirPollution
+// const AboutAirPollution = () =>
+//   <div className="about-us-container">
+//     <div className="about-pollution-heading-mobile-view" ml={6} mt={12}>
+//       About Air Pollution
+//     </div>
+//     <Flex direction={{ base: "column", md: "row" }} justify="space-between" className="main-container">
+//       <Flex direction="column" className="first-col" p={4} flex="1">
+//         <ComparisonChart />
+//         <FAQAccordion className="faq-accordion" />
+//       </Flex>
+//       <Flex className="second-col" p={4} flex="1">
+//         <AirQualityIndex />
+//       </Flex>
+//       <Flex className="third-col" p={4} flex="1">
+//         <UsefulLinks />
+//       </Flex>
+//     </Flex>
+//   </div>

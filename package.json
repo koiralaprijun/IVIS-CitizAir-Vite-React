@@ -1,5 +1,5 @@
 {
-  "homepage":"http://koiralaprijun.github.io/IVIS-CitizAir-Vite-React",
+  "homepage": "http://koiralaprijun.github.io/IVIS-CitizAir-Vite-React",
   "name": "npm",
   "private": true,
   "version": "0.0.0",
@@ -21,6 +21,7 @@
     "@emotion/react": "^11.11.4",
     "@emotion/styled": "^11.11.0",
     "@mapbox/mapbox-gl-geocoder": "^5.0.2",
+    "@mui/material": "^5.15.13",
     "axios": "^1.6.7",
     "chunk": "^0.0.3",
     "cors": "^2.8.5",

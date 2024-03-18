@@ -3,7 +3,7 @@ import * as d3 from "d3"
 import { Text, Button, Box, Flex, Heading } from "@chakra-ui/react"
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa"
 
-export const ComparisonChart = () => {
+const ComparisonChart = () => {
   const svgRef = useRef(null)
   const [currentView, setCurrentView] = useState(0)
   const views = [
@@ -117,7 +117,7 @@ export const ComparisonChart = () => {
 
   return (
     <div id="comparison-chart" style={{ display: "flex", flexDirection: "column", alignItems: "flex-start" }}>
-      <Box classNam="top-container">
+      <Box>
         <div className="button-container">
           <Button onClick={handlePreviousView} size={"xs"} leftIcon={<FaArrowLeft />} marginRight="10px" />
           <Button onClick={handleNextView} size={"xs"} rightIcon={<FaArrowRight />} />
@@ -133,3 +133,5 @@ export const ComparisonChart = () => {
     </div>
   )
 }
+
+export default ComparisonChart

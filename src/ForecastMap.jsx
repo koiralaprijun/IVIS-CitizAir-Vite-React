@@ -44,6 +44,13 @@ const ForecastMap = () => {
       // Add X-axis to the svg
       svg.append("g").attr("transform", `translate(0, ${height})`).call(xAxis)
 
+      const enrichedData = AqiHrData[selectedOption].map((d, i) => ({
+        value: d.value,
+        // Assuming your dataset starts at 0 hours; adjust as necessary
+        hour: i % 24,
+        period: i < 12 ? "AM" : "PM"
+      }))
+
       // Manually add AM and PM labels
       const periodLabels = ["AM", "PM", "AM", "PM", "AM", "PM"]
       svg
@@ -60,28 +67,26 @@ const ForecastMap = () => {
 
       svg
         .selectAll("rect")
-        .data(values)
+        .data(enrichedData) // Use the enriched data with hour and period
         .enter()
         .append("rect")
         .attr("x", (_, i) => i % cols * colWidth)
         .attr("y", (_, i) => Math.floor(i / cols) * rowHeight)
         .attr("width", colWidth)
         .attr("height", rowHeight)
-        .attr("fill", d => color(d))
+        .attr("fill", d => color(d.value))
         .on("mouseover", (event, d) => {
-          d3.select(tooltipRef.current).style("visibility", "visible").text(`Value: ${d}`)
+          // Calculate the display hour (convert 0-23 hour format to 1-12 format)
+          const displayHour = (d.hour % 12 || 12) + d.period
+          // Display the hour and value in the tooltip
+          d3.select(tooltipRef.current).style("visibility", "visible").text(`Hour: ${displayHour}, Value: ${d.value}`)
         })
         .on("mousemove", event => {
-          d3
-            .select(tooltipRef.current)
-            .style("top", event.pageY - 100 + "px") // Decrease the Y offset
-            .style("left", event.pageX - 50 + "px") // You might adjust this as needed
+          d3.select(tooltipRef.current).style("top", event.pageY - 70 + "px").style("left", event.pageX - 50 + "px")
         })
         .on("mouseout", () => {
           d3.select(tooltipRef.current).style("visibility", "hidden")
         })
-
-      // Optional: add axes or other elements here
     },
     [selectedOption]
   )

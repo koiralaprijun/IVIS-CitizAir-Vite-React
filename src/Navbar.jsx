@@ -1,39 +1,61 @@
-import { useState } from "react"
 import { Link } from "react-router-dom"
-import { Heading, Icon } from "@chakra-ui/react"
-import { GiHamburgerMenu, GiCancel } from "react-icons/gi" // Import hamburger and cancel icons
+import { Heading } from "@chakra-ui/react"
 import "../src/css/Navbar.css" // Assuming your CSS file path is correct
-import MapLegend from "./MapLegend"
+import ComparisonChart from "./ComparisonChart"
+import { FAQAccordion } from "./AboutAirPollution"
+import {
+  Button,
+  Flex,
+  Spacer,
+  Portal,
+  Popover,
+  PopoverTrigger,
+  PopoverContent,
+  PopoverHeader,
+  PopoverBody,
+  PopoverFooter,
+  PopoverArrow,
+  PopoverCloseButton,
+  PopoverAnchor
+} from "@chakra-ui/react"
 
 const Navbar = () => {
-  const [showSidebar, setShowSidebar] = useState(false)
-
-  const toggleSidebar = () => {
-    setShowSidebar(!showSidebar)
-  }
-
   return (
     <nav className="navbar">
-      <button className="toggle-nav-button" onClick={toggleSidebar}>
-        {showSidebar ? <Icon as={GiCancel} /> : <Icon as={GiHamburgerMenu} />}
-      </button>
-      <div className={`nav-sidebar ${showSidebar ? "show" : ""}`}>
+      <div className="nav-sidebar">
         <Link to="/" className="menu-item">
           <Heading className="nav-heading" mr={"6"}>
             CitizAir
           </Heading>
         </Link>
-        <div className="mobile-nav-content">visualize the air pollution of Stockholm</div>
-        <div className="menu">
-          <Link to="/about-air-pollution" className="menu-item">
-            About Air Pollution
-          </Link>
+        <div className="right-menu">
           <Link to="/about-us" className="menu-item">
             About Us
           </Link>
-        </div>
-        <div className="map-legend" containerstyle={{ position: "relative", marginBottom: "20px" }}>
-          <MapLegend />
+          <div className="about-button">
+            <Popover>
+              <PopoverTrigger>
+                <Button colorScheme="blue">?</Button>
+              </PopoverTrigger>
+              <Portal>
+                <PopoverContent mr="4" w="1200px" overflow="hidden">
+                  <PopoverArrow />
+                  <PopoverHeader>
+                    <Heading as="h3" size="md">
+                      Things to know about Air Pollution
+                    </Heading>
+                  </PopoverHeader>
+                  <PopoverCloseButton />
+                  <PopoverBody>
+                    <Flex w="100%" gap="20px">
+                      <ComparisonChart w="50%" />
+                      <FAQAccordion w="50%" />
+                    </Flex>
+                  </PopoverBody>
+                </PopoverContent>
+              </Portal>
+            </Popover>
+          </div>
         </div>
       </div>
     </nav>

@@ -4,6 +4,26 @@
   overflow-x: hidden;
 }
 
+#isopleth-map-container {
+  position: relative; /* Ensures that child absolute positioning is relative to this container */
+}
+
+.timeline-slider-container {
+  position: absolute;
+  top: 10px; /* Adjust as necessary */
+  left: 10px; /* Adjust as necessary */
+  z-index: 1; /* Ensures the slider is above the map layers */
+  background-color: rgba(104, 104, 104, 0.9);
+  padding: 15px 30px 15px 30px;
+  color: white;
+}
+
+/* .timeline-container {
+  z-index: 99;
+  width: 100%;
+  height: 300px;
+} */
+
 .my-custom-marker {
   border-radius: 50%; /* Example: makes the marker circular */
   border: 2px solid #de5050; /* Adds a white border */
