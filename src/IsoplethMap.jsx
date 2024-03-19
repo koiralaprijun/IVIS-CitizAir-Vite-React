@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react"
 import mapboxgl from "mapbox-gl"
 import MapLegend from "./MapLegend"
-
+import TimelineSlider from "./TimelineSlider"
 import "../src/css/IsoplethMap.css"
 
 const IsoplethMap = ({ selectedDay, selectedMetric, selectedLocation }) => {
@@ -59,12 +59,12 @@ const IsoplethMap = ({ selectedDay, selectedMetric, selectedLocation }) => {
         <p>AQI: ${selectedLocation.aqi} - <span style="color: ${aqiColor};">${aqiText}</span></p>
       </div>`
 
-        const popup = new mapboxgl.Popup({ offset: 25, className: "my-custom-popup" }).setHTML(popupContent).addTo(map)
+        // Create a popup instance
+        const popup = new mapboxgl.Popup({ offset: 25, className: "my-custom-popup" }).setHTML(popupContent)
 
-        // Create a marker and add it to the map
-        marker = new mapboxgl.Marker()
+        const marker = new mapboxgl.Marker()
           .setLngLat([selectedLocation.lon, selectedLocation.lat])
-          .setPopup(popup) // Sets the popup to appear on click; to show on hover, see below
+          .setPopup(popup) // This should associate the popup with the marker
           .addTo(map)
 
         // Optionally, center the map on the marker
@@ -74,10 +74,9 @@ const IsoplethMap = ({ selectedDay, selectedMetric, selectedLocation }) => {
           zoom: 14
         })
 
-        // Add event listeners for mouseenter and mouseleave
         const markerElement = marker.getElement()
-        markerElement.addEventListener("mouseenter", () => popup.addTo(map))
-        markerElement.addEventListener("mouseleave", () => popup.remove())
+        markerElement.addEventListener("mouseenter", () => popup.addTo(map)) // Show popup on hover
+        markerElement.addEventListener("mouseleave", () => popup.remove()) // Hide popup on mouse leave
       }
 
       // Cleanup function to remove the marker and popup when the component unmounts or selectedLocation changes
@@ -121,7 +120,7 @@ const IsoplethMap = ({ selectedDay, selectedMetric, selectedLocation }) => {
             type: "raster",
             source: "overlay",
             paint: {
-              "raster-opacity": 0.7
+              "raster-opacity": 0.65
             }
           })
         })
@@ -147,24 +146,57 @@ const IsoplethMap = ({ selectedDay, selectedMetric, selectedLocation }) => {
     [map, selectedLocation]
   )
 
+  const updateMapForSelectedHour = hour => {
+    if (!map) return
+    const imageName = `h${hour}`
+    const imagePath = `./raster-image/aqi_daily/aqi_${imageName}_raster.png`
+
+    // Logic to load and display the image on the map
+    // This can vary depending on how you're managing map layers and sources
+    if (map.getSource("hourlyOverlay")) {
+      map.removeLayer("hourlyOverlay")
+      map.removeSource("hourlyOverlay")
+    }
+
+    map.loadImage(`./raster-image/${selectedMetric}_daily/${selectedMetric}_${imageName}_raster.png`, (error, image) => {
+      if (error) throw error
+
+      map.addImage("hourlyOverlayImage", image)
+      map.addSource("hourlyOverlay", {
+        type: "image",
+        url: `./raster-image/${selectedMetric}_daily/${selectedMetric}_${imageName}_raster.png`,
+        coordinates: [[17.732179, 59.522258], [18.348042, 59.522258], [18.348042, 59.208266], [17.732179, 59.208266]] // Define corners of the image
+      })
+
+      map.addLayer({
+        id: "hourlyOverlay",
+        type: "raster",
+        source: "hourlyOverlay",
+        paint: { "raster-opacity": 0.65 }
+      })
+    })
+  }
+
   // This function should be inside your IsoplethMap component
   const handleSelectLocation = (lat, lng) => {
     setMarkerCoordinates({ lat, lng })
-  }
-
-  const handleSliderChange = (event, newValue) => {
-    setCurrentHour(newValue)
   }
 
   const handleSelectChange = event => {
     setSelectedOption(event.target.value)
   }
 
+  const handleHourChange = hour => {
+    // Assuming you have a function to update the map based on the selected hour
+    updateMapForSelectedHour(hour)
+  }
+
   return (
     <div id="isopleth-map-container">
-      <div id="map-container" />
-      <div className="timeline-slider-container" />
-      <div>
+      <div id="map-container">
+        <div className="timeline-slider-container">
+          <TimelineSlider onHourChange={handleHourChange} />
+        </div>
         <MapLegend />
       </div>
     </div>

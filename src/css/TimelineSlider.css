@@ -1,15 +1,21 @@
-.MuiSlider-root {
-  color: #a2a2a2 !important;
+.controls {
+  display: flex;
+  justify-content: space-between;
+  gap: 40px;
 }
 
-.MuiSlider-thumb {
-  background-color: #e5e5e5 !important;
+.play-button {
+  width: 5%;
 }
 
-.MuiSlider-track {
-  background-color: #a7a7a7 !important;
+.main-timeline {
+  width: 95%;
 }
 
-.MuiSlider-rail {
-  background-color: #d2d2d2 !important;
+.timeline-input {
+  width: 100%;
+}
+
+.timeline-input::-webkit-slider-runnable-track {
+  background: #85c0ff; /* Match track color */
 }

@@ -4,16 +4,16 @@ import "../src/css/MapLegend.css"
 const MapLegend = ({ containerStyle }) => {
   const [tooltip, setTooltip] = useState({ show: false, content: null, x: 0, y: 0, color: "#fff" })
   const legendData = [
-    { label: "Good", color: "#C0E49A", info: "Air quality is considered satisfactory, and air pollution poses little or no risk." },
+    { label: "Good", color: "#267300", info: "Air quality is considered satisfactory, and air pollution poses little or no risk." },
     {
       label: "Moderate",
-      color: "#FFFFB5",
+      color: "#FFEBAF",
       info:
         "Air quality is acceptable; however, for some pollutants there may be a moderate health concern for a very small number of people who are unusually sensitive to air pollution."
     },
     {
       label: "Unhealthy for Sensitive Groups",
-      color: "#FCCF5C",
+      color: "#FFAA00",
       info: "Members of sensitive groups may experience health effects. The general public is not likely to be affected."
     },
     { label: "Unhealthy", color: "#FD8C3C", info: "Everyone may begin to experience health effects; members of sensitive groups may experience more serious health effects." },

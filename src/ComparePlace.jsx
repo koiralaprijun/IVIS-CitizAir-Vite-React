@@ -65,12 +65,14 @@ const ComparePlace = () => {
   ) // Dependency array, re-run this effect when aqiValue changes
 
   const getAqiInfo = aqiValue => {
-    if (aqiValue >= 0 && aqiValue <= 50) {
-      return { text: "Good", color: "#C0E49A" }
+    if (aqiValue >= 0 && aqiValue <= 25) {
+      return { text: "Good", color: "#267300" }
+    } else if (aqiValue <= 50) {
+      return { text: "Fair", color: "#74A225" }
     } else if (aqiValue <= 100) {
-      return { text: "Moderate", color: "#FFFFB5" }
+      return { text: "Moderate", color: "#FFEBAF" }
     } else if (aqiValue <= 150) {
-      return { text: "Unhealthy for Sensitive Groups", color: "#FCCF5C" }
+      return { text: "Unhealthy for Sensitive Groups", color: "#FFAA00" }
     } else if (aqiValue <= 200) {
       return { text: "Unhealthy", color: "#f65e5f" }
     } else if (aqiValue <= 300) {
@@ -104,7 +106,7 @@ const ComparePlace = () => {
       <div className="toggle-bar">
         <Text
           ml={"0px"}
-          color={"#0183fd"}
+          color={"#91caff"}
           fontSize="sm"
           textDecoration="underline" // Apply underline to the text
           className="toggle-btn"

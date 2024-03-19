@@ -3,6 +3,43 @@
   height: 90vh;
   overflow-x: hidden;
 }
+.timeline-slider {
+  position: absolute;
+  width: 55%; /* Adjust this as needed */
+  margin: 5px 0;
+  bottom: 30px;
+  left: 5px;
+  background-color: rgb(255, 255, 255, 0.8);
+  padding: 20px 30px;
+  z-index: 1;
+}
+
+.timeline-labels {
+  display: flex;
+  justify-content: space-between;
+}
+
+.timeline-heading {
+  font-size: 20px;
+  font-weight: bold;
+  padding: 0px 0px 10px 0px;
+}
+
+.play-pause-btn {
+  padding: 5px 10px;
+  margin-bottom: 10px;
+  font-size: 16px;
+  color: white;
+  background-color: #007bff; /* Bootstrap primary color */
+  border: none;
+  border-radius: 1px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.play-pause-btn:hover {
+  background-color: #0056b3; /* Darker shade for hover effect */
+}
 
 #isopleth-map-container {
   position: relative; /* Ensures that child absolute positioning is relative to this container */

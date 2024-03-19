@@ -46,12 +46,14 @@ const Sidebar = ({ onDayChange, onSelectLocation }) => {
   }, [])
 
   const getAqiInfo = aqiValue => {
-    if (aqiValue >= 0 && aqiValue <= 50) {
-      return { text: "Good", color: "#C0E49A" }
+    if (aqiValue >= 0 && aqiValue <= 25) {
+      return { text: "Good", color: "#267300" }
+    } else if (aqiValue <= 50) {
+      return { text: "Fair", color: "#74A225" }
     } else if (aqiValue <= 100) {
-      return { text: "Moderate", color: "#FFFFB5" }
+      return { text: "Moderate", color: "#FFEBAF" }
     } else if (aqiValue <= 150) {
-      return { text: "Unhealthy for Sensitive Groups", color: "#f99049" }
+      return { text: "Unhealthy for Sensitive Groups", color: "#FFAA00" }
     } else if (aqiValue <= 200) {
       return { text: "Unhealthy", color: "#f65e5f" }
     } else if (aqiValue <= 300) {
@@ -84,22 +86,22 @@ const Sidebar = ({ onDayChange, onSelectLocation }) => {
       <SearchBar variant="page1" onSelectAqi={onSelectAqi} onSelectLocation={onSelectLocation} />
       <div className="heading-container" style={{ backgroundColor: backgroundColor }}>
         <div className="header-aqi-value">
-          <Heading className="search-header" as="h3" size="md" mb="4">
+          <Heading className="search-header" as="h3" size="md" mb="4" style={{ color: aqiValue >= 0 && aqiValue <= 50 ? "white" : "black" }}>
             {cityName ? cityName : "Loading..."}
             {/* {cityName ? cityName : <Text fontSize="sm">Loading...</Text>} */}
             <ComparePlace />
           </Heading>
           <div className="aqi-value-container">
-            <div className="aqi-value">
+            <div className="aqi-value" style={{ color: "white" }}>
               {/* {aqiValue} */}
               {aqiValue ? aqiValue : "..."}
             </div>
-            <Text fontSize="xs" color="#495e1b">
+            <Text fontSize="xs" color={"white"}>
               AQI Value
             </Text>
           </div>
         </div>
-        <div className="aqi-text">
+        <div className="aqi-text" style={{ color: "white" }}>
           {aqiText}
         </div>
       </div>
