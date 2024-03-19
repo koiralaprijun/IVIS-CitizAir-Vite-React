@@ -12,13 +12,13 @@ const DailyToggleButton = ({ onDateChange }) => {
   return (
     <div>
       <button className={`button ${selectedDate === "d01" ? "active" : ""}`} onClick={() => handleToggle("d01")}>
-        March 12
+        Day 1
       </button>
-      <button className={`button ${selectedDate === "d02" ? "active" : ""}`} onClick={() => handleToggle("d02")}>
-        March 13
+      <button className={`button ${selectedDate === "d02"  ? "active" : ""}`} onClick={() => handleToggle("d02")}>
+        Day 2
       </button>
       <button className={`button ${selectedDate === "d03" ? "active" : ""}`} onClick={() => handleToggle("d03")}>
-        March 14
+        Day 3
       </button>
     </div>
   )

@@ -76,7 +76,7 @@ const Sidebar = ({ onDayChange, onSelectLocation }) => {
     setAqiValue(aqi)
     setCityName(name)
     // Call the passed function from parent component
-    onSelectLocation(lat, lon, 'Location Name', 'AQI Value');
+    onSelectLocation(lat, lon, "Location Name", "AQI Value")
   }
 
   return (

@@ -1,15 +1,13 @@
 import React, { useEffect, useState } from "react"
 import mapboxgl from "mapbox-gl"
 import MapLegend from "./MapLegend"
-import TimelineSlider from "./TimelineSlider"
 
 import "../src/css/IsoplethMap.css"
 
 const IsoplethMap = ({ selectedDay, selectedMetric, selectedLocation }) => {
   const [map, setMap] = useState(null)
   const [markerCoordinates, setMarkerCoordinates] = useState(null)
-  const [currentHour, setCurrentHour] = useState(0)
-  const [selectedOption, setSelectedOption] = useState("no2")
+  const [selectedOption, setSelectedOption] = useState("aqi")
 
   useEffect(() => {
     mapboxgl.accessToken = "pk.eyJ1Ijoia3ByaWp1biIsImEiOiJjajd4OHVweTYzb2l1MndvMzlvdm90c2ltIn0.J25C2fbC1KpcqIRglAh4sA"
@@ -95,9 +93,10 @@ const IsoplethMap = ({ selectedDay, selectedMetric, selectedLocation }) => {
   useEffect(
     () => {
       if (map && selectedDay && selectedMetric) {
-        const imagePath = `./raster-image/${selectedMetric}_daily/${selectedMetric}_${selectedDay}.png`
+        // const hourFormatted = currentHour.toString().padStart(2, "0")
+        // const imagePath = `./raster-image/${selectedMetric}_daily/${selectedMetric}_${selectedDay}_raster.png`
 
-        map.loadImage(imagePath, (error, image) => {
+        map.loadImage(`./raster-image/${selectedMetric}_daily/${selectedMetric}_${selectedDay}_raster.png`, (error, image) => {
           if (error) {
             console.error("Failed to load image:", error)
             return
@@ -113,7 +112,7 @@ const IsoplethMap = ({ selectedDay, selectedMetric, selectedLocation }) => {
 
           map.addSource("overlay", {
             type: "image",
-            url: imagePath,
+            url: `./raster-image/${selectedMetric}_daily/${selectedMetric}_${selectedDay}_raster.png`,
             coordinates: [[17.732179, 59.522258], [18.348042, 59.522258], [18.348042, 59.208266], [17.732179, 59.208266]]
           })
 
@@ -122,7 +121,7 @@ const IsoplethMap = ({ selectedDay, selectedMetric, selectedLocation }) => {
             type: "raster",
             source: "overlay",
             paint: {
-              "raster-opacity": 0.75
+              "raster-opacity": 0.7
             }
           })
         })
@@ -148,50 +147,6 @@ const IsoplethMap = ({ selectedDay, selectedMetric, selectedLocation }) => {
     [map, selectedLocation]
   )
 
-  useEffect(
-    () => {
-      if (!map) return
-
-      const hourFormatted = currentHour.toString().padStart(2, "0")
-      const imagePath = `/raster-image/${selectedMetric}_daily/${selectedMetric}_h${hourFormatted}_raster.png`
-
-      // Remove existing overlay layer and source if they exist
-      if (map.getLayer("overlay")) {
-        map.removeLayer("overlay")
-      }
-      if (map.getSource("overlay")) {
-        map.removeSource("overlay")
-      }
-
-      // Wait for the existing source and layer to be removed before loading a new image
-      map.loadImage(`/raster-image/${selectedMetric}_daily/${selectedMetric}_h${hourFormatted}_raster.png`, (error, image) => {
-        if (error) {
-          console.error("Failed to load image:", error)
-          return
-        }
-
-        // Add the image to the map as a new source
-        map.addImage("overlay-image", image, { pixelRatio: 2 })
-
-        // Define a new source with the updated image
-        map.addSource("overlay", {
-          type: "image",
-          url: `/raster-image/${selectedMetric}_daily/${selectedMetric}_h${hourFormatted}_raster.png`,
-          coordinates: [[17.732179, 59.522258], [18.348042, 59.522258], [18.348042, 59.208266], [17.732179, 59.208266]] // Adjust these coordinates based on your specific needs
-        })
-
-        // Add a new overlay layer using the new source
-        map.addLayer({
-          id: "overlay",
-          type: "raster",
-          source: "overlay",
-          paint: { "raster-opacity": 0.85 }
-        })
-      })
-    },
-    [map, currentHour]
-  )
-
   // This function should be inside your IsoplethMap component
   const handleSelectLocation = (lat, lng) => {
     setMarkerCoordinates({ lat, lng })
@@ -208,9 +163,7 @@ const IsoplethMap = ({ selectedDay, selectedMetric, selectedLocation }) => {
   return (
     <div id="isopleth-map-container">
       <div id="map-container" />
-      <div className="timeline-slider-container">
-        <TimelineSlider currentHour={currentHour} onChange={handleSliderChange} />
-      </div>
+      <div className="timeline-slider-container" />
       <div>
         <MapLegend />
       </div>
