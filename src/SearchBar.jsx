@@ -7,10 +7,9 @@ import FullData from "./FullData.json"
 const SearchBar = ({ onSelectAqi, onSelectLocation, variant, onResultSelect  }) => {
   const [data, setData] = useState([])
   const [filterData, setFilterData] = useState(null)
-  const [inputValue, setInputValue] = useState("") // New state for storing input value
+  const [inputValue, setInputValue] = useState("") 
   const searchResultsRef = useRef(null)
 
-  // https://api.waqi.info/feed/A107179/?token=a3bf1197881754e07fb1a334116289ffb6104296
 
   useEffect(() => {
     fetch("https://api.waqi.info/search/?keyword=stockholm&token=a3bf1197881754e07fb1a334116289ffb6104296")
@@ -21,14 +20,7 @@ const SearchBar = ({ onSelectAqi, onSelectLocation, variant, onResultSelect  }) 
         setFilterData(combinedData)
       })
       .catch(error => console.log(error))
-    // fetch("https://api.waqi.info/search/?keyword=stockholm&token=a3bf1197881754e07fb1a334116289ffb6104296")
-    //   .then(response => response.json())
-    //   .then(data => {
-    //     console.log("Fetched Data:", data)
-    //     setData(data.data) // Make sure you're setting the correct part of the data
-    //     setFilterData(data.data)
-    //   })
-    //   .catch(error => console.log(error))
+
 
     const handleClickOutside = event => {
       if (searchResultsRef.current && !searchResultsRef.current.contains(event.target)) {
