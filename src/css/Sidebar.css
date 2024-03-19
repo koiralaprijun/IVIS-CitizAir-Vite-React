@@ -13,7 +13,7 @@
   flex-direction: column;
   padding: 20px;
   color: #556b26;
-  background-color: rgb(227, 227, 227);
+  background-color: #267300;
 }
 .header-aqi-value {
   display: flex;

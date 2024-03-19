@@ -34,7 +34,7 @@ const Sidebar = ({ onDayChange, onSelectLocation, aqiData }) => {
 
   useEffect(() => {
     //Get the AQI Value of nearest Station
-    fetch("https://api.waqi.info/feed/stockholm/?token=a3bf1197881754e07fb1a334116289ffb6104296")
+    fetch("https://api.waqi.info/feed/here/?token=a3bf1197881754e07fb1a334116289ffb6104296")
       .then(response => response.json())
       .then(data => {
         if (data.status === "ok") {
